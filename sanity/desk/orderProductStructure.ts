@@ -1,9 +1,8 @@
-import {ListItemBuilder} from 'sanity/desk'
-import defineStructure from '../utils/defineStructure'
 import {DocumentsIcon} from '@sanity/icons'
 import {orderableDocumentListDeskItem} from '@sanity/orderable-document-list'
+import {ListItemBuilder, StructureBuilder, StructureContext} from 'sanity/structure'
 
-export default defineStructure((S, context) =>
+export default (S: StructureBuilder, context: StructureContext) =>
   S.listItem()
     .title('Ordenar Productos')
     .icon(DocumentsIcon)
@@ -14,4 +13,3 @@ export default defineStructure((S, context) =>
             orderableDocumentListDeskItem({type: 'product', S, context}),
         ])
     )
-);

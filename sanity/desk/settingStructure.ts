@@ -1,9 +1,9 @@
-import {ListItemBuilder} from 'sanity/desk'
-import defineStructure from '../utils/defineStructure'
+import {ListItemBuilder, StructureBuilder} from 'sanity/structure'
 
-export default defineStructure((S) =>
+
+export default (S: StructureBuilder) =>
   S.listItem()
     .title('Settings')
     .schemaType('settings')
     .child(S.editor().title('Settings').schemaType('settings').documentId('settings'))
-)
+

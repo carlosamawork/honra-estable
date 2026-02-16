@@ -2,8 +2,9 @@ import {ListItemBuilder} from 'sanity/desk'
 import defineStructure from '../utils/defineStructure'
 import {InfoOutlineIcon} from '@sanity/icons'
 import {BasketIcon} from '@sanity/icons'
+import { StructureBuilder } from 'sanity/structure'
 
-export default defineStructure((S) =>
+export default (S: StructureBuilder) =>
   S.listItem()
     .title('Products')
     .schemaType('product')
@@ -50,4 +51,4 @@ export default defineStructure((S) =>
             ])
         )
     )
-)
+

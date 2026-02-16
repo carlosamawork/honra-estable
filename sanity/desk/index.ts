@@ -1,7 +1,7 @@
 /**
  * Desk structure overrides
  */
-import {ListItemBuilder, StructureResolver} from 'sanity/desk'
+import {ListItemBuilder, StructureBuilder, StructureResolver} from 'sanity/structure'
 import collections from './collectionStructure'
 import home from './homeStructure'
 import pages from './pageStructure'
@@ -49,19 +49,21 @@ const hiddenDocTypes = (listItem: any) => {
   ].includes(id)
 }
 
-export const structure: StructureResolver = (S, context) =>
-  S.list()
+export const structure = (S: StructureBuilder) => {
+  const context = S.context;
+  return S.list()
     .title('Content')
     .items([
-      home(S, context),
-      pages(S, context),
+      home(S),
+      pages(S),
       S.divider(),
-      collections(S, context),
-      products(S, context),
-      orderProducts(S,context),
-      category(S, context),
+      collections(S),
+      products(S),
+      orderProducts(S, context), 
+      category(S),
       S.divider(),
-      settings(S, context),
-      legal(S, context),
+      settings(S),
+      legal(S),
       S.divider(),
     ])
+}
