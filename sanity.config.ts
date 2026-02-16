@@ -14,7 +14,7 @@ const devOnlyPlugins = [visionTool({ name: 'groq-developer', title: 'GROQ Debugg
 
 
 export default defineConfig({
-  name: 'AMA',
+  name: 'MGTZM',
   title: 'Website Admin',
   projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID as string,
   dataset: process.env.NEXT_PUBLIC_SANITY_DATASET as string,
