@@ -15,7 +15,7 @@ export default function HeaderComponent({ data }: HeaderProps) {
   useEffect(() => {
     console.log(
       '<!-- ----------------------------------------------------- -->\n' +
-      '<!-- Code by AMA, http://ama.work (2026)                   -->\n' +
+      '<!-- Code by MGTZM, http://magatzem.studio (2026)                   -->\n' +
       '<!-- ----------------------------------------------------- -->');
   }, [])
 
@@ -28,7 +28,7 @@ export default function HeaderComponent({ data }: HeaderProps) {
       animate={{ opacity: 1 }}
       transition={{ duration: 0.3, delay: 0.5 }}
     >
-      <h4>AMA&apos;s header</h4>
+      <h4>MGTZM&apos;s header</h4>
     </motion.header>
   )
 }

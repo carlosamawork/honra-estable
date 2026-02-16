@@ -43,20 +43,20 @@ export default defineType({
         return !parent?.store || (isActive && !isDeleted)
       },
     }),
-    // Title (proxy)
-    defineField({
-      name: 'titleProxy',
-      title: 'Title',
-      type: 'proxyString',
-      options: {field: 'store.title'},
-    }),
-    // Slug (proxy)
-    defineField({
-      name: 'slugProxy',
-      title: 'Slug',
-      type: 'proxyString',
-      options: {field: 'store.slug.current'},
-    }),
+    // // Title (proxy)
+    // defineField({
+    //   name: 'titleProxy',
+    //   title: 'Title',
+    //   type: 'proxyString',
+    //   options: {field: 'store.title'},
+    // }),
+    // // Slug (proxy)
+    // defineField({
+    //   name: 'slugProxy',
+    //   title: 'Slug',
+    //   type: 'proxyString',
+    //   options: {field: 'store.slug.current'},
+    // }),
     defineField({
       name: 'images',
       title: 'Images',

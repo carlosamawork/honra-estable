@@ -63,11 +63,9 @@ import video from './objects/module/video'
 import category from './taxonomies/categories'
 import moduleProduct from './objects/module/product'
 import moduleProducts from './objects/module/products'
-import placeholderString from './objects/shopify/placeholderString'
 import priceRange from './objects/shopify/priceRange'
 import option from './objects/shopify/option'
 import productWithVariant from './objects/shopify/productWithVariant'
-import proxyString from './objects/shopify/proxyString'
 import shopifyCollection from './objects/shopify/shopifyCollection'
 import shopifyCollectionRule from './objects/shopify/shopifyCollectionRule'
 import shopifyProduct from './objects/shopify/shopifyProduct'
@@ -104,11 +102,9 @@ const objects = [
   video,
   moduleProduct,
   moduleProducts,
-  placeholderString,
   priceRange,
   option,
   productWithVariant,
-  proxyString,
   shopifyCollection,
   shopifyCollectionRule,
   shopifyProduct,

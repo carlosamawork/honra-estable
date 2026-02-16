@@ -13,8 +13,8 @@ export async function generateMetadata() {
   if (!page) {
     return {
       metadataBase: BASE_URL,
-      title: `${page.seo?.title || siteTitle}`,
-      description: page.seo?.description || siteDescription,
+      title: `${page?.seo?.title || siteTitle}`,
+      description: page?.seo?.description || siteDescription,
       robots: {
         index: false,
         follow: true,

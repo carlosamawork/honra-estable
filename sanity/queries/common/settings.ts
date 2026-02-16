@@ -7,8 +7,6 @@ import { seo } from '../fragments/seo'
 export async function getSettings(): Promise<SettingsData> {
   return client.fetch(
     groq`*[_type == "settings"][0]{
-      headerMenu,
-      footerMenu,
       seo{
         ${seo}
       }

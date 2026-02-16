@@ -23,7 +23,7 @@ export default function FooterComponent({ data }: FooterProps) {
             animate={{ opacity: 1 }}
             transition={{ duration: 0.3, delay: 0.5 }}
         >
-            <h4>AMA&apos;s footer</h4>
+            <h4>MGTZM&apos;s footer</h4>
         </motion.footer>
     )
 

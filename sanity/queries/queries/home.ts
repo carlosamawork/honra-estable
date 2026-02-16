@@ -8,14 +8,6 @@ export async function getHome() {
         groq`*[_type == "home"][0]{
                 hero{
                     title,
-                    listOfImages[]{
-                        imageDesktop{
-                            ${image}
-                        },
-                        imageMobile{
-                            ${image}
-                        }
-                    }
                 }
             }`
     )
