@@ -1,9 +1,11 @@
 import {ListItemBuilder} from 'sanity/desk'
 import defineStructure from '../utils/defineStructure'
+import {DocumentsIcon} from '@sanity/icons'
 
 export default defineStructure((S) =>
   S.listItem()
-    .title('Settings')
-    .schemaType('settings')
-    .child(S.editor().title('Settings').schemaType('settings').documentId('settings'))
+    .title('Legals')
+    .icon(DocumentsIcon)
+    .schemaType('legal')
+    .child(S.documentTypeList('legal'))
 )

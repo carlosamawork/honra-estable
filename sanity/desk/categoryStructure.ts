@@ -1,17 +1,11 @@
-// sanity/structure/categoryStructure.ts
-import { StructureBuilder } from 'sanity/structure'
-import { TagsIcon } from '@sanity/icons'
-import { orderableDocumentListDeskItem } from '@sanity/orderable-document-list'
+import {ListItemBuilder} from 'sanity/desk'
+import defineStructure from '../utils/defineStructure'
+import {TagsIcon} from '@sanity/icons'
 
-export default function categoryStructure(S: StructureBuilder, context: any) {
-  return S.listItem()
-    .title('Categories')
+export default defineStructure((S) =>
+  S.listItem()
+    .title('Categorías')
     .icon(TagsIcon)
-    .child(() =>
-      S.list()
-        .title('Categories')
-        .items([
-          orderableDocumentListDeskItem({ type: 'category', S, context, title: 'Categories' }),
-        ])
-    )
-}
+    .schemaType('category')
+    .child(S.documentTypeList('category'))
+)

@@ -2,18 +2,24 @@
 import annotationLinkEmail from './annotations/linkEmail'
 import annotationLinkExternal from './annotations/linkExternal'
 import annotationLinkInternal from './annotations/linkInternal'
+import annotationProduct from './annotations/product'
 
 const annotations = [
   annotationLinkEmail,
   annotationLinkExternal,
   annotationLinkInternal,
+  annotationProduct,
 ]
 
 // Document types
 import page from './documents/page'
+import product from './documents/product'
+import productVariant from './documents/productVariant'
+import collection from './documents/collection'
+import legal from './documents/legal'
 
 
-const documents = [page,]
+const documents = [page, product, productVariant, collection, legal]
 
 // Singleton document types
 import home from './singletons/home'
@@ -29,14 +35,16 @@ import bodyTextTerms from './blocks/bodyTextTerms'
 const blocks = [body, bodySimple, bodyTextTerms]
 
 // Object types
+import modulePage from './objects/module/module'
 import footer from './objects/global/footer'
 import header from './objects/global/header'
 import linkExternal from './objects/global/linkExternal'
 import linkInternal from './objects/global/linkInternal'
 import linkSocial from './objects/global/linkSocial'
-
+import inventory from './objects/shopify/inventory'
 import links from './objects/global/links'
 import notFoundPage from './objects/global/notFoundPage'
+import heroCollection from './objects/hero/collection'
 import heroHome from './objects/hero/home'
 import heroPage from './objects/hero/page'
 import moduleAccordion from './objects/module/accordion'
@@ -49,9 +57,27 @@ import menu from './objects/global/menu'
 import seo from './objects/seo/seo'
 import seoHome from './objects/seo/home'
 import seoPage from './objects/seo/page'
+import seoShopify from './objects/seo/shopify'
 import seoDescription from './objects/seo/description'
 import video from './objects/module/video'
 import category from './taxonomies/categories'
+import moduleProduct from './objects/module/product'
+import moduleProducts from './objects/module/products'
+import placeholderString from './objects/shopify/placeholderString'
+import priceRange from './objects/shopify/priceRange'
+import option from './objects/shopify/option'
+import productWithVariant from './objects/shopify/productWithVariant'
+import proxyString from './objects/shopify/proxyString'
+import shopifyCollection from './objects/shopify/shopifyCollection'
+import shopifyCollectionRule from './objects/shopify/shopifyCollectionRule'
+import shopifyProduct from './objects/shopify/shopifyProduct'
+import shopifyProductVariant from './objects/shopify/shopifyProductVariant'
+import characteristic from './objects/module/characteristic'
+
+// Collections
+import collectionGroup from './objects/collection/group'
+import collectionLinks from './objects/collection/links'
+
 
 const objects = [
   footer,
@@ -76,6 +102,24 @@ const objects = [
   seoDescription,
   category,
   video,
+  moduleProduct,
+  moduleProducts,
+  placeholderString,
+  priceRange,
+  option,
+  productWithVariant,
+  proxyString,
+  shopifyCollection,
+  shopifyCollectionRule,
+  shopifyProduct,
+  shopifyProductVariant,
+  collectionGroup,
+  collectionLinks,
+  inventory,
+  heroCollection,
+  seoShopify,
+  modulePage,
+  characteristic
 ]
 
 export const schemaTypes = [...annotations, ...singletons, ...objects, ...blocks, ...documents]

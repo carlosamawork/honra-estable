@@ -11,5 +11,16 @@ export default defineField({
       title: 'Title',
       type: 'string',
     }),
+    defineField({
+      name: 'subtitle',
+      title: 'Subtitle',
+      type: 'string',
+    }),
+    defineField({
+      name: 'image',
+      title: 'Image',
+      type: 'image',
+      options: {hotspot: true},
+    }),
   ],
 })

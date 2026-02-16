@@ -14,6 +14,21 @@ export default defineField({
       name: 'footerLinks',
       title: 'Footer Links',
       type: 'menuLinks',
+    }),
+    defineField({
+      name: 'footerLinksSecondary',
+      title: 'Footer Links',
+      type: 'menuLinks',
+    }),
+    defineField({
+      name: 'claim',
+      title: 'Claim',
+      type: 'string',
+    }),
+    defineField({
+      name: 'copyright',
+      title: 'Copyright',
+      type: 'string',
     })
   ],
 })

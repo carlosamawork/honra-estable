@@ -32,7 +32,7 @@ export default async function RootLayout({ children, }: { children: React.ReactN
     <html lang="en">
       <body>
         <RawHTML html="<!-- ----------------------------------------------------- -->
-        <!-- Code by AMA, http://ama.work (2026) -->
+        <!-- Code by MGTZM, http://magatzem.studio (2026) -->
         <!-- ----------------------------------------------------- -->" />
         <WebProvider>
           <HeaderComponent data={header} />

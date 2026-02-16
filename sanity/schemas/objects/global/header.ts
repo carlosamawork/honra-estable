@@ -15,6 +15,5 @@ export default defineField({
       title: 'Header Links',
       type: 'menuLinks'
     }),
-
   ],
 })

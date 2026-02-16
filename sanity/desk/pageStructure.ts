@@ -1,10 +1,11 @@
-import { DocumentsIcon } from '@sanity/icons'
-import { StructureBuilder } from 'sanity/structure'
+import {ListItemBuilder} from 'sanity/desk'
+import defineStructure from '../utils/defineStructure'
+import {DocumentsIcon} from '@sanity/icons'
 
-export default function pageStructure(S: StructureBuilder, context: any) {
-  return S.listItem()
-    .title('Other Pages')
+export default defineStructure((S) =>
+  S.listItem()
+    .title('Pages')
     .icon(DocumentsIcon)
     .schemaType('page')
     .child(S.documentTypeList('page'))
-}
+)

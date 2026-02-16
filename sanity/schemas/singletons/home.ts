@@ -27,6 +27,17 @@ export default defineField({
       type: 'hero.home',
       group: 'editorial',
     }),
+    defineField({
+      name: 'modules',
+      title: 'Modules',
+      type: 'array',
+      of: [
+        {
+          type: 'module.page',
+        },
+      ],
+      group: 'editorial',
+    }),
     // SEO
     defineField({
       name: 'seo',

@@ -1,5 +1,5 @@
-import { CogIcon } from '@sanity/icons'
-import { defineType, defineField } from 'sanity'
+import {CogIcon} from '@sanity/icons'
+import {defineType, defineField} from 'sanity'
 
 const TITLE = 'Settings'
 interface ProductOptions {
@@ -14,12 +14,12 @@ export default defineType({
   groups: [
     {
       default: true,
-      name: 'header',
-      title: 'Header',
+      name: 'navigation',
+      title: 'Navigation',
     },
     {
-      name: 'footer',
-      title: 'Footer',
+      name: 'notFoundPage',
+      title: '404 page',
     },
     {
       name: 'seo',
@@ -29,26 +29,25 @@ export default defineType({
   fields: [
     // Menu
     defineField({
-      name: 'header',
-      title: 'Header',
-      type: 'headerSettings',
-      group: 'header',
+      name: 'menu',
+      title: 'Menu',
+      type: 'menuSettings',
+      group: 'navigation',
     }),
     // Footer
     defineField({
       name: 'footer',
       title: 'Footer',
       type: 'footerSettings',
-      group: 'footer',
+      group: 'navigation',
     }),
-    // // Not found page
-    // defineField({
-    //   name: 'notFoundPage',
-    //   title: '404 page',
-    //   type: 'notFoundPage',
-    //   group: 'notFoundPage',
-    //   hidden: true
-    // }),
+    // Not found page
+    defineField({
+      name: 'notFoundPage',
+      title: '404 page',
+      type: 'notFoundPage',
+      group: 'notFoundPage',
+    }),
     // SEO
     defineField({
       name: 'seo',

@@ -4,8 +4,8 @@ import { defineField } from 'sanity'
 import { validateSlug } from '../../utils/validateSlug'
 
 export default defineField({
-  name: 'page',
-  title: 'Page',
+  name: 'legal',
+  title: 'Legal',
   type: 'document',
   icon: DocumentIcon,
   groups: [
@@ -41,22 +41,12 @@ export default defineField({
       validation: validateSlug,
       group: 'editorial',
     }),
+    // Body
     defineField({
-      name: 'hero',
-      title: 'Hero',
-      type: 'hero.page',
-      group: 'editorial',
-    }),
-    defineField({
-      name: 'modules',
-      title: 'Modules',
-      type: 'array',
-      of: [
-        {
-          type: 'module.page',
-        },
-      ],
-      group: 'editorial',
+        name: 'body',
+        title: 'Body',
+        type: 'bodyTextTerms',
+        group: 'editorial',
     }),
     // SEO
     defineField({

@@ -2,7 +2,7 @@ import { defineField } from 'sanity'
 
 export default defineField({
   name: 'bodyTextTerms',
-  title: 'Body AMA — p, H3',
+  title: 'Body — p, H3',
   type: 'array',
   of: [
     {

@@ -2,7 +2,7 @@ import { defineField } from 'sanity'
 
 export default defineField({
   name: 'bodySimple',
-  title: 'Body AMA',
+  title: 'Body',
   type: 'array',
   of: [
     {
