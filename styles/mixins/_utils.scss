@@ -1,0 +1,180 @@
+/************************************************************************************
+*******************    UTILS                                *************************
+*************************************************************************************/
+@use "sass:math";
+@use "sass:map";
+
+@use "../common/variables" as *;
+
+/** 
+@include disable-selection()
+*/
+@mixin disable-selection() {
+  -webkit-touch-callout: none; /* iOS Safari */
+  -webkit-user-select: none; /* Safari */
+  -khtml-user-select: none; /* Konqueror HTML */
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* Internet Explorer/Edge */
+  user-select: none; /* Non-prefixed version, currently */
+  -webkit-tap-highlight-color: transparent;
+
+  -webkit-user-drag: none;
+  -khtml-user-drag: none;
+  -moz-user-drag: none;
+  -o-user-drag: none;
+  user-drag: none;
+}
+
+/**
+ * Removes the scroll bar
+ *
+ * Usage:
+ * .selector {
+ *   @include remove-scrollbar;
+ * }
+ */
+@mixin remove-scrollbar() {
+  &::-webkit-scrollbar {
+    width: 0px;
+    background: transparent;
+  }
+  * {
+    -ms-overflow-style: none !important;
+  }
+  &::-webkit-scrollbar {
+    width: 0;
+  }
+  &::-webkit-scrollbar-track {
+    box-shadow: none;
+    border-radius: 0;
+  }
+  &::-webkit-scrollbar-thumb {
+    border-radius: 0;
+    background-color: transparent;
+  }
+}
+
+/**
+ * Returns a font size value based on a key and device type.
+ *
+ * This function allows you to retrieve consistent font sizes
+ * for desktop and mobile devices, using the mappings defined in
+ * your variables.scss ($fontSizeDesktop and $fontSizeMobile).
+ * the variables you pass must be in quotes always
+ *
+ * Usage:
+ *   font-size("md");               // Returns 20px (desktop by default)
+ *   font-size("lg", "mobile");       // Returns 18px (mobile)
+ *
+ * Parameters:
+ *   $key (String) - The key of the font size to retrieve.
+ *                   Must match one of the keys in $fontSizeDesktop / $fontSizeMobile:
+ *                   "xs", "sm", "md", "lg", "xl", "xxl"
+ *
+ *   $device (String, optional) - The device type. Can be:
+ *                   - desktop (default)
+ *                   - mobile
+ *
+ * Returns:
+ *   A font size value (e.g., 16px, 20px, 35px) from the corresponding map.
+ *
+ * Notes:
+ * - Ensure that $fontSizeDesktop and $fontSizeMobile are defined
+ *   before using this function.
+ * - If an invalid key is provided, the function will return null.
+ */
+@function font-size($key, $device: desktop) {
+  @if $device == desktop {
+    @return map.get($fontSizeDesktop, $key);
+  } @else if $device == mobile {
+    @return map.get($fontSizeMobile, $key);
+  } @else {
+    @warn "Unknown device `#{$device}` for font-size()";
+    @return null;
+  }
+}
+
+@mixin no-select() {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  -webkit-user-drag: none;
+  -khtml-user-drag: none;
+  -moz-user-drag: none;
+  -o-user-drag: none;
+  user-drag: none;
+}
+
+@mixin placeholder($class: "*") {
+  #{$class}::placeholder {
+    @content;
+  }
+
+  #{$class}::-webkit-input-placeholder {
+    @content;
+  }
+
+  #{$class}:-moz-placeholder {
+    @content;
+  }
+
+  #{$class}::-moz-placeholder {
+    @content;
+  }
+
+  #{$class}:-ms-input-placeholder {
+    @content;
+  }
+}
+
+@mixin hover() {
+  @media (hover: hover) {
+    &:hover {
+      @content;
+    }
+  }
+
+  .ie11 & {
+    &:hover {
+      @content;
+    }
+  }
+}
+
+@mixin hover-full() {
+  @media (hover: hover) {
+    &:hover,
+    &:active,
+    &:focus {
+      @content;
+    }
+  }
+
+  .ie11 & {
+    &:hover,
+    &:active,
+    &:focus {
+      @content;
+    }
+  }
+}
+
+@mixin aspect($width, $height) {
+  @supports (aspect-ratio: auto) {
+    aspect-ratio: calc($width / $height);
+  }
+
+  @supports not (aspect-ratio: auto) {
+    position: relative;
+    height: 0;
+    padding-top: calc(($height / $width) * 100%);
+
+    > * {
+      position: absolute;
+      inset: 0;
+    }
+  }
+}

@@ -1,0 +1,160 @@
+@use "sass:map";
+@use "../common/variables" as *;
+@use "../mixins/breakpoints" as *;
+@use "../mixins/utils" as *;
+
+/*****************************************
+*****    HELPERS            **************
+******************************************/
+.italics,
+em,
+i {
+    font-style: italic;
+    font-weight: inherit;
+}
+
+a {
+    font-weight: inherit;
+}
+
+/*****************************************
+*****    GENERAL            **************
+******************************************/
+
+%h1 {
+    font-size: font-size("xxl", "mobile");
+    line-height: 1.2;
+
+    @include media-breakpoint-up(md) {
+        font-size: font-size("xxl", "desktop");
+    }
+}
+
+%h2 {
+    font-size: font-size("xl", "mobile");
+    line-height: 1.16;
+
+    @include media-breakpoint-up(md) {
+        font-size: font-size("xl", "desktop");
+        line-height: 1.2;
+    }
+}
+
+%h3 {
+    font-size: font-size("lg", "mobile");
+    line-height: 1.2;
+
+    @include media-breakpoint-up(md) {
+        font-size: font-size("lg", "desktop");
+    }
+}
+
+%h3 {
+    font-size: font-size("md", "mobile");
+    line-height: 1.2;
+
+    @include media-breakpoint-up(md) {
+        font-size: font-size("md", "desktop");
+    }
+}
+
+%h4 {
+    @extend %h3;
+}
+
+%p {
+    font-size: font-size("sm", "mobile");
+    line-height: 1.2;
+
+    @include media-breakpoint-up(md) {
+        font-size: font-size("sm", "desktop");
+    }
+}
+
+/*****************************************
+*****    APPLY            **************
+******************************************/
+
+
+h1,
+.h1 {
+    @extend %h1;
+}
+
+h2,
+.h2 {
+    @extend %h2;
+}
+
+h3,
+.h3 {
+    @extend %h3;
+}
+
+h3,
+.h3 {
+    @extend %h3;
+}
+
+h4,
+.h4 {
+    @extend %h4;
+}
+
+p {
+    @extend %p;
+}
+
+small {
+    font-size: font-size("xs", "mobile");
+    line-height: 1.2;
+
+    @include media-breakpoint-up(md) {
+        font-size: font-size("xs", "desktop");
+    }
+}
+
+.font-sm {
+    font-size: font-size("sm", "mobile");
+    line-height: 1.2;
+
+    @include media-breakpoint-up(md) {
+        font-size: font-size("sm", "desktop");
+    }
+}
+
+.font-md {
+    font-size: font-size("md", "mobile");
+    line-height: 1.2;
+
+    @include media-breakpoint-up(md) {
+        font-size: font-size("md", "desktop");
+    }
+}
+
+.font-lg {
+    font-size: font-size("lg", "mobile");
+    line-height: 1.2;
+
+    @include media-breakpoint-up(md) {
+        font-size: font-size("lg", "desktop");
+    }
+}
+
+.font-xl {
+    font-size: font-size("xl", "mobile");
+    line-height: 1.2;
+
+    @include media-breakpoint-up(md) {
+        font-size: font-size("xl", "desktop");
+    }
+}
+
+.font-xxl {
+    font-size: font-size("xxl");
+    line-height: 1.2;
+
+    @include media-breakpoint-up(md) {
+        font-size: font-size("xxl", "desktop");
+    }
+}

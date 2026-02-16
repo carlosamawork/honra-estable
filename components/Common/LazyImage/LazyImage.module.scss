@@ -1,0 +1,53 @@
+.blur{
+    opacity: 0;
+    transition: opacity 1s ease;
+}
+
+.contentImage{
+    opacity: 0;
+    transition: opacity 1s ease;
+}
+
+.contentImage.unblur {
+    opacity: 1;
+    transition: opacity 1s ease;
+    transition-delay: 0.5s;
+}
+
+.lazyImage{
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: flex-end;
+}
+
+.caption{
+    position: absolute;
+    bottom: -35px;
+    left: 0;
+}
+
+// .veil{
+//     position: absolute;
+//     opacity: 0.7;
+//     width: 100%;
+//     height: 100%;
+// }
+
+@keyframes unblur {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+.imagesSq{
+    aspect-ratio: 1 / 1;
+}
+
+.contentImage{
+    height: 100%;
+    width: 100%;
+}
+

@@ -1,0 +1,23 @@
+@use "./styles/common/variables.scss" as *;
+@use "./styles/mixins/breakpoints.scss" as *;
+
+.welcome{
+  background-color: $body-bg;
+  color: $secondary;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  a{
+    &:link,
+    &:visited,
+    &:active{
+      color: $secondary;
+    }
+    &:hover{
+      text-decoration: underline;
+
+    }
+  }
+}

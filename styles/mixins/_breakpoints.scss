@@ -1,0 +1,162 @@
+/************************************************************************************
+ * BREAKPOINTS
+ * Responsive breakpoint utilities inspired by Bootstrap
+ ************************************************************************************/
+
+@use "sass:map";
+@use "../common/variables" as *;
+
+/**
+ * Breakpoints map format:
+ * (xs: 0, sm: 576px, md: 768px, lg: 992px, xl: 1200px)
+ *
+ * `$breakpoints` is expected to be defined globally.
+ */
+
+/**
+ * Returns the name of the next breakpoint.
+ * @example breakpoint-next(sm) → md
+ * @returns {string|null}
+ */
+@function breakpoint-next($name, $breakpoints: $breakpoints, $breakpoint-names: map-keys($breakpoints)) {
+	$n: index($breakpoint-names, $name);
+
+	@if $n < length($breakpoint-names) {
+		@return nth($breakpoint-names, $n + 1);
+	}
+
+	@return null;
+}
+
+/**
+ * Returns the minimum width of a breakpoint.
+ * Returns null for the smallest breakpoint.
+ * @example breakpoint-min(sm) → 576px
+ */
+@function breakpoint-min($name, $breakpoints: $breakpoints) {
+	$min: map.get($breakpoints, $name);
+
+	@if $min !=0 {
+		@return $min;
+	}
+
+	@return null;
+}
+
+/**
+ * Returns the maximum width of a breakpoint.
+ * Calculated as the next breakpoint minus 0.02px.
+ * @example breakpoint-max(sm) → 767.98px
+ */
+@function breakpoint-max($name, $breakpoints: $breakpoints) {
+	$next: breakpoint-next($name, $breakpoints);
+
+	@if $next {
+		@return breakpoint-min($next, $breakpoints) - 0.02px;
+	}
+
+	@return null;
+}
+
+/**
+ * Returns breakpoint suffix for utility classes.
+ * @example breakpoint-infix(xs) → ""
+ * @example breakpoint-infix(sm) → "-sm"
+ */
+@function breakpoint-infix($name, $breakpoints: $breakpoints) {
+	@if breakpoint-min($name, $breakpoints)==null {
+		@return "";
+	}
+
+	@return "-#{$name}";
+}
+
+/**
+ * Media query ≥ breakpoint
+ * @include media-breakpoint-up(md) { ... }
+ */
+@mixin media-breakpoint-up($name, $breakpoints: $breakpoints) {
+	$min: breakpoint-min($name, $breakpoints);
+
+	@if $min {
+		@media (min-width: $min) {
+			@content;
+		}
+	}
+
+	@else {
+		@content;
+	}
+}
+
+/**
+ * Media query ≤ breakpoint
+ * @include media-breakpoint-down(md) { ... }
+ */
+@mixin media-breakpoint-down($name, $breakpoints: $breakpoints) {
+	$max: breakpoint-max($name, $breakpoints);
+
+	@if $max {
+		@media (max-width: $max) {
+			@content;
+		}
+	}
+
+	@else {
+		@content;
+	}
+}
+
+/**
+ * Media query between two breakpoints
+ * @include media-breakpoint-between(sm, lg) { ... }
+ */
+@mixin media-breakpoint-between($lower, $upper, $breakpoints: $breakpoints) {
+	$min: breakpoint-min($lower, $breakpoints);
+	$max: breakpoint-max($upper, $breakpoints);
+
+	@if $min !=null and $max !=null {
+		@media (min-width: $min) and (max-width: $max) {
+			@content;
+		}
+	}
+
+	@else if $max ==null {
+		@include media-breakpoint-up($lower, $breakpoints) {
+			@content;
+		}
+	}
+
+	@else if $min ==null {
+		@include media-breakpoint-down($upper, $breakpoints) {
+			@content;
+		}
+	}
+}
+
+/**
+ * Media query for a single breakpoint range only
+ * @include media-breakpoint-only(md) { ... }
+ */
+@mixin media-breakpoint-only($name, $breakpoints: $breakpoints) {
+	$min: breakpoint-min($name, $breakpoints);
+	$max: breakpoint-max($name, $breakpoints);
+
+	@if $min !=null and $max !=null {
+		@media (min-width: $min) and (max-width: $max) {
+			@content;
+		}
+	}
+
+	@else if $max ==null {
+		@include media-breakpoint-up($name, $breakpoints) {
+			@content;
+		}
+	}
+
+	@else if $min ==null {
+		@include media-breakpoint-down($name, $breakpoints) {
+			@content;
+		}
+	}
+}

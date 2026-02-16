@@ -1,0 +1,79 @@
+/************************************************************************************
+*******************    VARIABLES                            *************************
+*************************************************************************************/
+$breakpoints: (
+  xs: 0,
+  sm: 576px,
+  md: 768px,
+  lg: 992px,
+  xl: 1200px,
+  xxl: 1500px
+);
+
+/**
+ * Typography
+ */
+
+$AMAFont: "FTAktual", Times, sans-serif;
+
+$font-family-base: $AMAFont;
+
+$font-size-base: 62.5%; /*https://snook.ca/archives/html_and_css/font-size-with-rem*/
+$line-height-base: 1.5;
+
+$fontSizeDesktop: (
+  "xs": 14px,
+  "sm": 16px,
+  "md": 20px,
+  "lg": 25px,
+  "xl": 35px,
+  "xxl": 75px
+);
+
+$fontSizeMobile: (
+  "xs": 10px,
+  "sm": 14px,
+  "md": 16px,
+  "lg": 18px,
+  "xl": 20px,
+  "xxl": 35px
+);
+
+
+/**
+ * Colors
+ */
+$base: #f6f6f6;
+$secondary: #1c1c20;
+
+$highlight: $secondary;
+
+$text-color: $secondary;
+$body-bg: $base;
+
+$c_menu: #fff;
+
+/**
+ * Buttons
+ */
+
+$border_radius: 1rem;
+$card_radius: 1.8rem;
+$image_radius_6: 0.6rem;
+$image_radius_10: 1rem;
+$arrow_width: 0.67em;
+
+/**
+ * Transitions
+ */
+
+$transition-duration: 300ms;
+
+/**
+ * margin, padding, widths column
+ */
+$offset_m: 2rem;
+$offset_d: 2rem;
+
+$gutter_m: 1rem;
+$gutter_d: 1rem;

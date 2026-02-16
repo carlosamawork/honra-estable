@@ -1,0 +1,18 @@
+@use "./styles/common/variables.scss" as *;
+@use "./styles/mixins/breakpoints.scss" as *;
+
+.footer {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+
+    background-color: $body-bg;
+
+    text-align: center;
+    border-top: 1px solid $secondary;
+    h4 {
+        margin: 1em;
+        @include media-breakpoint-up(md) {
+        }
+    }
+}

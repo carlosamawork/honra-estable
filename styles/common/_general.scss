@@ -1,0 +1,75 @@
+/*****************************************
+*****    FADEIN       **************
+******************************************/
+@use "../common/variables" as *;
+@use "../mixins/breakpoints" as *;
+
+.fadeInElement,
+.fadeInListEntry {
+    opacity: 0;
+}
+/*****************************************
+*****    PAGE GENERAL       **************
+******************************************/
+
+/*****************************************
+*****    HELPERS Desk/Mobile      ********
+******************************************/
+.desktop_visible {
+    display: none;
+    @include media-breakpoint-up(md) {
+        display: inline-block;
+    }
+}
+.mobile_visible {
+    @include media-breakpoint-up(md) {
+        display: none;
+    }
+}
+
+/*****************************************
+*****    BUTTONS            **************
+******************************************/
+.secondary_button,
+.primary_button {
+    padding: 0.65em 0.9em 0.65em;
+    border: 0.1rem solid black;
+    transition: all $transition-duration ease-in-out;
+
+    display: inline-block;
+
+    margin-right: 0.6rem;
+    margin-top: 0.6rem;
+    // padding- 0.7 / 1.1 radius- 4 o mas, redondo
+
+    &:not(.no_hover) {
+        &:hover {
+            cursor: pointer;
+            background: black;
+            color: white;
+        }
+    }
+
+    &.b_black {
+        background: black;
+        color: white;
+        &:hover {
+            background: transparent;
+            color: black;
+        }
+    }
+}
+
+.secondary_button {
+    padding: 0.41em 0.49em 0.41em;
+}
+
+.arrow_link {
+    a {
+        display: inline-block;
+        margin-top: 0.4em;
+        @include media-breakpoint-up(md) {
+            margin-top: 0;
+        }
+    }
+}
