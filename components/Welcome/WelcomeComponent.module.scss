@@ -1,23 +1,190 @@
 @use "./styles/common/variables.scss" as *;
 @use "./styles/mixins/breakpoints.scss" as *;
 
-.welcome{
-  background-color: $body-bg;
-  color: $secondary;
-  height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-  a{
-    &:link,
-    &:visited,
-    &:active{
-      color: $secondary;
-    }
-    &:hover{
-      text-decoration: underline;
+.home {
+  background: #ececec;
+  color: #0f0f10;
+}
 
+.hero {
+  min-height: 100vh;
+  position: relative;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 65% 28%, rgba(248, 114, 190, 0.5), transparent 22%),
+    radial-gradient(circle at 48% 56%, rgba(239, 121, 122, 0.38), transparent 14%),
+    linear-gradient(180deg, #efb6a8 0%, #f1b8ab 100%);
+
+  h1 {
+    position: absolute;
+    left: 0.9rem;
+    bottom: 1.4rem;
+    margin: 0;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    font-size: 1.25rem;
+
+    @include media-breakpoint-up(md) {
+      left: 1.2rem;
+      bottom: 1.2rem;
+      font-size: 1.5rem;
     }
+  }
+}
+
+.heroNoise {
+  position: absolute;
+  inset: 0;
+  background-image: url('/images/blur.png');
+  background-size: cover;
+  opacity: 0.3;
+  mix-blend-mode: soft-light;
+}
+
+.heroGlow {
+  position: absolute;
+  top: 23%;
+  left: 50%;
+  width: min(52vw, 660px);
+  height: min(34vw, 430px);
+  border-radius: 50%;
+  transform: translateX(-50%);
+  filter: blur(46px);
+  background: radial-gradient(circle, rgba(232, 126, 137, 0.9) 0%, rgba(236, 149, 161, 0.22) 64%, transparent 78%);
+}
+
+.heroMark,
+.finalMark {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 130px;
+  height: 120px;
+
+  span {
+    position: absolute;
+    display: block;
+    background: #f2a0a0;
+    filter: blur(0.6px);
+  }
+
+  span:nth-child(1) {
+    left: 59px;
+    top: 10px;
+    width: 12px;
+    height: 44px;
+    clip-path: polygon(50% 0%, 72% 23%, 38% 45%, 72% 68%, 35% 100%, 0 84%, 33% 61%, 0 40%, 40% 20%);
+  }
+
+  span:nth-child(2) {
+    left: 16px;
+    bottom: 8px;
+    width: 50px;
+    height: 22px;
+    transform: skewX(12deg);
+    clip-path: polygon(0% 100%, 45% 0%, 100% 100%);
+  }
+
+  span:nth-child(3) {
+    right: 16px;
+    bottom: 8px;
+    width: 50px;
+    height: 22px;
+    transform: skewX(-12deg);
+    clip-path: polygon(0% 100%, 55% 0%, 100% 100%);
+  }
+}
+
+.heroMark {
+  top: 36vh;
+}
+
+.module {
+  --module-columns: 1;
+
+  display: grid;
+  grid-template-columns: repeat(var(--module-columns), minmax(0, 1fr));
+  border-top: 1px solid #d8d8d8;
+
+  @include media-breakpoint-down(sm) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.moduleItem {
+  border-right: 1px solid #d8d8d8;
+  border-bottom: 1px solid #d8d8d8;
+  background: #efefef;
+  display: flex;
+  flex-direction: column;
+}
+
+.isAuto .imageWrap {
+  aspect-ratio: 4 / 5;
+}
+
+.isMedium .imageWrap {
+  aspect-ratio: 1 / 1;
+}
+
+.isFull .imageWrap {
+  height: min(80vh, 860px);
+}
+
+.imageWrap {
+  width: 100%;
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+}
+
+.imageFallback {
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  background:
+    radial-gradient(circle at 70% 30%, rgba(255, 106, 75, 0.38), transparent 30%),
+    linear-gradient(145deg, #d7d7d7 0%, #ececec 45%, #cecece 100%);
+}
+
+.itemTitle {
+  margin: 0;
+  padding: 0.8rem 0.8rem 0;
+  font-size: 1.3rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+
+  a {
+    color: #101010 !important;
+  }
+}
+
+.itemBody {
+  padding: 0.65rem 0.8rem 0.95rem;
+
+  p {
+    margin: 0;
+    font-size: 1.2rem;
+    line-height: 1.25;
+  }
+}
+
+.finalVisual {
+  height: min(86vh, 920px);
+  position: relative;
+  background:
+    linear-gradient(180deg, rgba(184, 111, 65, 0.55) 0%, rgba(255, 56, 25, 0.82) 46%, rgba(38, 32, 29, 0.9) 100%),
+    radial-gradient(circle at 50% 72%, rgba(255, 96, 66, 0.28) 0%, transparent 42%);
+}
+
+.finalMark {
+  top: 50%;
+  transform: translate(-50%, -50%) scale(0.45);
+
+  span {
+    background: #ffd76d;
   }
 }

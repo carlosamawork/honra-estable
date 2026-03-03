@@ -10,9 +10,12 @@ const nextConfig = {
         protocol: "https",
         hostname: "cdn.sanity.io",
       },
-
+      {
+        protocol: "https",
+        hostname: "cdn.shopify.com",
+      },
     ],
-    domains: ['localhost', 'cdn.sanity.io'],
+    domains: ['localhost', 'cdn.sanity.io', 'cdn.shopify.com'],
   },
   sassOptions: {
     includePaths: [path.join(__dirname, 'styles')],

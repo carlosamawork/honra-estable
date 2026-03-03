@@ -4,6 +4,6 @@ import { getSettings } from './settings';
 export async function getHeader(): Promise<HeaderData> {
   const settings = await getSettings()
   return {
-    headerMenu: settings.headerMenu,
+    headerMenu: settings.headerMenu || {links: []},
   }
 }

@@ -1,0 +1,132 @@
+@use "./styles/mixins/breakpoints.scss" as *;
+
+.home {
+  background: #ececec;
+  color: #0f0f10;
+}
+
+.hero {
+  --hero-bg: linear-gradient(180deg, #efb6a8 0%, #f1b8ab 100%);
+  min-height: 100vh;
+  background-image: var(--hero-bg);
+  background-size: cover;
+  background-position: center;
+  position: relative;
+  display: grid;
+  place-items: center;
+}
+
+.heroLogo {
+  width: min(18vw, 120px);
+  height: auto;
+}
+
+.heroLogoFallback {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.5);
+  backdrop-filter: blur(2px);
+}
+
+.module {
+  --module-columns: 1;
+  display: grid;
+  grid-template-columns: repeat(var(--module-columns), minmax(0, 1fr));
+
+  @include media-breakpoint-down(sm) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.moduleItem {
+  min-width: 0;
+  margin-bottom: 32px;
+  &.imageModuleItem{
+    margin-bottom: 0;
+  }
+  
+}
+
+.isAuto .imageItem{
+  aspect-ratio: 4 / 5;
+  position: relative;
+}
+
+.isMedium .imageItem{
+  aspect-ratio: 2 / 3;
+  position: relative;
+}
+
+.isFull .imageItem{
+  height: 100vh;
+  position: relative;
+}
+
+.productItem{
+  aspect-ratio: 1 / 1;
+  position: relative;
+}
+
+.imageItem,
+.productItem > img {
+  width: 100%;
+  display: block;
+
+  img,
+  & {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+}
+
+.productItem {
+  display: flex;
+  flex-direction: column;
+}
+
+.productInfo {
+  padding: 0.8rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 0.8rem;
+
+  h3,
+  p {
+    margin: 0;
+    font-size: 1.3rem;
+    line-height: 1.2;
+  }
+
+  h3 {
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+  }
+}
+
+.textItem {
+  padding: 1rem 0.8rem;
+
+  p {
+    margin: 0;
+    font-size: 1.25rem;
+    line-height: 1.28;
+  }
+
+  h1{
+    font-size: 25px;
+    line-height: 1.1;
+    font-weight: 500;
+  }
+}
+
+.imageFallback {
+  width: 100%;
+  background:
+    radial-gradient(circle at 72% 28%, rgba(255, 84, 55, 0.35), transparent 30%),
+    linear-gradient(140deg, #e8e8e8 0%, #d8d8d8 100%);
+}
+

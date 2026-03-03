@@ -44,8 +44,8 @@ export default defineField({
       type: 'array',
       of: [
         {
-          name: 'customItem',
-          title: 'Custom item',
+          name: 'imageItem',
+          title: 'Image item',
           type: 'object',
           fields: [
             // Image
@@ -68,17 +68,50 @@ export default defineField({
               ],
               validation: (Rule) => Rule.required(),
             }),
+            
+          ],
+          preview: {
+            select: {
+              image: 'image',
+              caption: 'image.caption',
+              alt: 'image.alt',
+            },
+            prepare(selection) {
+              const { image, caption, alt } = selection
+              return {
+                media: image,
+                title: caption || alt || 'Image item',
+                subtitle: 'Image',
+              }
+            },
+          },
+        },
+        {
+          name: 'textItem',
+          title: 'Text item',
+          type: 'object',
+          fields: [
             // Body
             defineField({
               name: 'body',
               title: 'Body',
-              type: 'array',
-              of: [{
-                type: 'bodySimple',
-              }],
+              type: 'bodySimple',
               validation: (Rule) => Rule.required(),
             }),
-          ]
+          ],
+          preview: {
+            select: {
+              body: 'body',
+            },
+            prepare(selection) {
+              const { body } = selection
+              const text = body ? blocksToText(body) : ''
+              return {
+                title: text || 'Text item',
+                subtitle: 'Text',
+              }
+            },
+          },
         },
         {
           name: 'productItem',
@@ -93,18 +126,36 @@ export default defineField({
   ],
   preview: {
     select: {
-      item: 'items.0',
+      columns: 'columns',
+      height: 'height',
+      firstItem: 'items.0',
+      item0: 'items.0._key',
+      item1: 'items.1._key',
+      item2: 'items.2._key',
     },
     prepare(selection) {
-      const { item } = selection
-      const image = item?.image || item?.store?.previewImageUrl
-      const body = item?.body || undefined 
-      const title = item?.store?.title || undefined
+      const { columns, height, firstItem, item0, item1, item2 } = selection
+      const countLabel = item2
+        ? '3+ items'
+        : item1
+          ? '2 items'
+          : item0
+            ? '1 item'
+            : '0 items'
+      const image = firstItem?.image || firstItem?.store?.previewImageUrl
+      const body = firstItem?.body
+      const bodyText = body ? blocksToText(body) : ''
+      const firstTitle =
+        firstItem?.store?.title ||
+        firstItem?.image?.caption ||
+        firstItem?.image?.alt ||
+        bodyText ||
+        'Module item'
 
       return {
         media: image,
-        subtitle: body && blocksToText(body),
-        title: title || 'Module item',
+        title: firstTitle,
+        subtitle: `${columns || 1} col · ${height || 'auto'} · ${countLabel}`,
       }
     },
   },

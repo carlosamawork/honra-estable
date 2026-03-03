@@ -4,15 +4,68 @@
 .header {
   position: fixed;
   top: 0;
+  left: 0;
   width: 100%;
+  z-index: 20;
+  padding: 1.4rem 0.8rem 0;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: start;
+  gap: 1rem;
+  background: transparent;
 
-  background-color: $body-bg;
+  @include media-breakpoint-up(md) {
+    padding: 1.2rem 1rem 0;
+  }
+}
 
-  text-align: center;
-  border-bottom: 1px solid $secondary;
-  h4 {
-    margin: 1em;
-    @include media-breakpoint-up(md) {
+.brand {
+  font-size: clamp(4.4rem, 6vw, 6rem);
+  font-weight: 700;
+  letter-spacing: -0.04em;
+  line-height: 0.88;
+  text-transform: lowercase;
+  color: #0f0f10 !important;
+
+  span {
+    font-size: 0.3em;
+    vertical-align: top;
+    margin-left: 0.12em;
+  }
+}
+
+.nav {
+  justify-self: center;
+  display: none;
+  gap: clamp(1.6rem, 5vw, 7rem);
+  align-items: center;
+  padding-top: 0.35rem;
+
+  @include media-breakpoint-up(md) {
+    display: flex;
+  }
+
+  a {
+    font-size: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: #101010 !important;
+    border-bottom: 1px solid transparent;
+    transition: border-color 240ms ease;
+
+    &:hover {
+      border-bottom-color: #0f0f10;
     }
   }
+}
+
+.cart {
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+  font-size: 0.95rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  padding-top: 0.35rem;
+  color: #101010;
 }

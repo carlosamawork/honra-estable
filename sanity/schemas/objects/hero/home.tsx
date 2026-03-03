@@ -7,9 +7,20 @@ export default defineField({
   fields: [
     // Title
     defineField({
-      name: 'title',
-      title: 'Title',
-      type: 'string',
+      name: 'image',
+      title: 'Image',
+      type: 'image',
+      options: {
+        hotspot: true,
+      },
+    }),
+    defineField({
+      name: 'logo',
+      title: 'Logo',
+      type: 'image',
+      options: {
+        hotspot: true,
+      }, 
     }),
   ],
 })

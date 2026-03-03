@@ -6,6 +6,9 @@ export const portableBlockComponents = (): PortableTextComponents => {
   return {
     block: {
       normal: ({ children }: any) => <p>{children}</p>,
+      h1: ({ children }: any) => <h1>{children}</h1>,
+      h2: ({ children }: any) => <h2>{children}</h2>,
+      h3: ({ children }: any) => <h3>{children}</h3>,
     },
     marks: {
       annotationLinkExternal: ({ value, children }) => {

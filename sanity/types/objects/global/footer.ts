@@ -3,5 +3,8 @@
 import type { Menu } from './menu';
 
 export type FooterData = {
-  footerMenu: Menu;
+  footerMenu?: Menu;
+  footerSecondaryMenu?: Menu;
+  claim?: string;
+  copyright?: string;
 };

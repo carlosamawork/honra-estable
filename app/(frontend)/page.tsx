@@ -1,6 +1,6 @@
-import WelcomeComponent from '@/components/Welcome/WelcomeComponent';
+import HomeComponent from '@/components/Home';
 import { getDefaultSEO } from '@/sanity/queries/common/defaultSEO';
-import { getHomeSEO } from '@/sanity/queries/queries/home';
+import { getHome, getHomeSEO } from '@/sanity/queries/queries/home';
 import { BASE_IMAGE_HEIGHT, BASE_IMAGE_URL, BASE_IMAGE_WIDTH, BASE_URL, buildUrl, getFavicons, siteDescription, siteTitle } from '@/utils/seoHelper';
 
 
@@ -82,10 +82,11 @@ export async function generateMetadata() {
 }
 
 export default async function Home() {
+  const home = await getHome()
 
   return (
     <main>
-      <WelcomeComponent />
+      <HomeComponent data={home} />
     </main>
   )
 }

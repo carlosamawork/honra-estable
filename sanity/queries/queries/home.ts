@@ -1,16 +1,22 @@
 import { groq } from 'next-sanity'
 import { client } from '..'
+import { homeHero, homeModules } from '../fragments/home'
 import { seo } from '../fragments/seo'
-import image from 'next/image'
 
 export async function getHome() {
-    return client.fetch(
-        groq`*[_type == "home"][0]{
-                hero{
-                    title,
-                }
-            }`
-    )
+  return client.fetch(
+    groq`*[_type == "home"][0]{
+      ${homeHero},
+      ${homeModules}
+    }`,
+    {},
+    {
+      next: {
+        tags: ['home'],
+        revalidate: 60,
+      },
+    }
+  )
 }
 
 export async function getHomeSEO() {
