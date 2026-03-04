@@ -58,6 +58,16 @@ export default defineType({
     //   options: {field: 'store.slug.current'},
     // }),
     defineField({
+      name: 'hoverImage',
+      title: 'Hover Image',
+      description: 'Image shown on hover in the shop grid',
+      type: 'image',
+      options: {
+        hotspot: true,
+      },
+      group: 'editorial',
+    }),
+    defineField({
       name: 'images',
       title: 'Images',
       type: 'array',

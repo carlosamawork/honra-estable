@@ -1,0 +1,80 @@
+@use '@/styles/common/variables' as *;
+@use '@/styles/mixins/breakpoints' as *;
+
+.shop {
+  background-color: $base;
+  min-height: 100vh;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+
+  @include media-breakpoint-down(md) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.card {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+  cursor: pointer;
+}
+
+.imageWrapper {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 720 / 676;
+  overflow: hidden;
+}
+
+.imageDefault,
+.imageHover {
+  position: absolute;
+  inset: 0;
+  transition: opacity 0.5s ease;
+}
+
+.imageHover {
+  opacity: 0;
+}
+
+.card:hover .imageDefault {
+  opacity: 0;
+}
+
+.card:hover .imageHover {
+  opacity: 1;
+}
+
+.imageFallback {
+  width: 100%;
+  height: 100%;
+  background-color: #e0e0e0;
+}
+
+.info {
+  padding: 8px 16px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.title {
+  font-family: $AMAFont;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  line-height: 1.3;
+  color: $secondary;
+}
+
+.price {
+  font-family: $AMAFont;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  line-height: 1.3;
+  color: $secondary;
+}
