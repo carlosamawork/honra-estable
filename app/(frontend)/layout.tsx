@@ -1,11 +1,21 @@
 import "../../styles/main.scss";
 
+import { Outfit } from 'next/font/google';
 import React, { Suspense } from 'react';
+
+const outfit = Outfit({
+  subsets: ['latin'],
+  weight: ['400', '500', '600', '700'],
+  variable: '--font-outfit',
+  display: 'swap',
+});
 import WebProvider from '../../context/webContext';
+import ShopProvider from '../../context/shopContext';
 import HeaderComponent from '../../components/Common/HeaderComponent';
 import FooterComponent from '../../components/Common/FooterComponent';
 
-import NewsletterComponent from '@/components/Common/NewsletterComponent';
+import NewsletterComponent from '@/components/Common/NewsletterComponent'
+import CartDrawer from '@/components/Common/CartDrawer';
 
 import CookieConsent from '@/components/Common/CookieConsent/CookieConsent';
 import ConsentGate from '@/components/Common/Analytics/consentGate';
@@ -29,35 +39,38 @@ export default async function RootLayout({ children, }: { children: React.ReactN
   const footer: FooterData | undefined = results[1].status === 'fulfilled' ? results[1].value : undefined
 
   return (
-    <html lang="en">
+    <html lang="en" className={outfit.variable}>
       <body>
         <RawHTML html="<!-- ----------------------------------------------------- -->
         <!-- Code by MGTZM, http://magatzem.studio (2026) -->
         <!-- ----------------------------------------------------- -->" />
-        <WebProvider>
-          <HeaderComponent data={header} />
+        <ShopProvider>
+          <WebProvider>
+            <HeaderComponent data={header} />
+            <CartDrawer />
 
-          {children}
+            {children}
 
-          {/* Cookie Consent */}
-          <CookieConsent />
-          {process.env.NODE_ENV === 'production' && (
-            <>
-              <ConsentGate category="analytics">
-                <Analytics />
-                {/* <Hotjar /> */}
-              </ConsentGate>
+            {/* Cookie Consent */}
+            <CookieConsent />
+            {process.env.NODE_ENV === 'production' && (
+              <>
+                <ConsentGate category="analytics">
+                  <Analytics />
+                  {/* <Hotjar /> */}
+                </ConsentGate>
 
-              {/* <ConsentGate category="marketing">
-                <FacebookPixel />
-                <PinterestTag />
-              </ConsentGate> */}
-            </>
-          )}
-          {/* Cookie Consent */}
+                {/* <ConsentGate category="marketing">
+                  <FacebookPixel />
+                  <PinterestTag />
+                </ConsentGate> */}
+              </>
+            )}
+            {/* Cookie Consent */}
 
-          <FooterComponent data={footer} />
-        </WebProvider>
+            <FooterComponent data={footer} />
+          </WebProvider>
+        </ShopProvider>
       </body>
     </html>
   )

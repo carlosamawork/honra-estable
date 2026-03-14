@@ -46,7 +46,9 @@
   }
 
   a {
-    font-size: 1rem;
+    font-family: $OverusedGrotesk;
+    font-weight: 600;
+    font-size: 1.4rem;
     text-transform: uppercase;
     letter-spacing: 0.06em;
     color: #101010 !important;
@@ -60,10 +62,12 @@
 }
 
 .cart {
+  font-family: $OverusedGrotesk;
+  font-weight: 600;
   border: 0;
   background: transparent;
   cursor: pointer;
-  font-size: 0.95rem;
+  font-size: 1.4rem;
   text-transform: uppercase;
   letter-spacing: 0.06em;
   padding-top: 0.35rem;

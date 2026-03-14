@@ -2,9 +2,10 @@
 
 import Link from 'next/link'
 import s from './HeaderComponent.module.scss'
-import { useEffect, useRef } from 'react'
+import { useContext, useEffect, useRef } from 'react'
 import { motion } from 'framer-motion'
 import { HeaderData } from '@/sanity/types'
+import { CartContext } from '@/context/shopContext'
 
 type HeaderProps = {
   data?: HeaderData
@@ -12,11 +13,12 @@ type HeaderProps = {
 
 export default function HeaderComponent({ data }: HeaderProps) {
   const headerRef = useRef<HTMLElement>(null)
+  const { cart, setCartOpen } = useContext(CartContext)
 
   const fallbackLinks = [
-    {title: 'Collection', url: '/'},
-    {title: 'About', url: '/'},
-    {title: 'Explore', url: '/'},
+    {title: 'Shop', url: '/shop'},
+    {title: 'About', url: '/about'},
+    {title: 'Explore', url: '/explore'},
   ]
 
   const links = data?.headerMenu?.links?.length ? data.headerMenu.links : fallbackLinks
@@ -67,8 +69,13 @@ export default function HeaderComponent({ data }: HeaderProps) {
         })}
       </nav>
 
-      <button className={s.cart} type="button" aria-label="Open cart">
-        CART (0)
+      <button
+        className={s.cart}
+        type="button"
+        aria-label="Abrir carrito"
+        onClick={() => setCartOpen(true)}
+      >
+        CART ({cart.length})
       </button>
     </motion.header>
   )

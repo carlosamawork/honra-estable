@@ -1,0 +1,188 @@
+@use '@/styles/common/variables' as *;
+@use '@/styles/mixins/breakpoints' as *;
+@use '@/styles/mixins/utils' as *;
+
+// ─── Page wrapper ─────────────────────────────────────────────────────────────
+
+.explore {
+  background: $base;
+  color: $text-color;
+}
+
+// ─── Hero ─────────────────────────────────────────────────────────────────────
+
+.hero {
+  position: relative;
+  height: 100svh;
+  overflow: hidden;
+
+  @include media-breakpoint-down(md) {
+    height: auto;
+    aspect-ratio: 3 / 4;
+  }
+}
+
+.heroImage {
+  position: absolute;
+  inset: 0;
+}
+
+.heroContent {
+  position: absolute;
+  bottom: 3.2rem;
+  left: $offset_d;
+  pointer-events: none;
+
+  @include media-breakpoint-down(md) {
+    bottom: 1.6rem;
+    left: $offset_m;
+  }
+}
+
+.heroTitle {
+  font-family: $OverusedGrotesk;
+  font-weight: 600;
+  font-size: font-size('xs');
+  text-transform: uppercase;
+  color: $base;
+  margin: 0;
+  line-height: 1.3;
+}
+
+.heroSubtitle {
+  font-family: $OverusedGrotesk;
+  font-weight: 500;
+  font-size: font-size('xs');
+  text-transform: uppercase;
+  color: $base;
+  margin: 0.4rem 0 0;
+  line-height: 1.3;
+}
+
+// ─── Modules ──────────────────────────────────────────────────────────────────
+
+.module {
+  --columns: 1;
+  display: grid;
+  grid-template-columns: repeat(var(--columns), minmax(0, 1fr));
+
+  @include media-breakpoint-down(md) {
+    grid-template-columns: 1fr;
+  }
+}
+
+// ─── Height variants ──────────────────────────────────────────────────────────
+
+.isAuto .imageWrapper {
+  position: relative;
+}
+
+.isMedium .imageWrapper {
+  aspect-ratio: 2 / 3;
+  position: relative;
+}
+
+.isFull .imageWrapper {
+  height: 100svh;
+  position: relative;
+
+  @include media-breakpoint-up(lg) {
+    height: 100vh;
+  }
+}
+
+// ─── Module item ──────────────────────────────────────────────────────────────
+
+.moduleItem {
+  min-width: 0;
+  overflow: hidden;
+  margin-bottom: 2.4rem;
+}
+
+.textModuleItem {
+  overflow: visible;
+}
+
+.imageWrapper {
+  width: 100%;
+  overflow: hidden;
+}
+
+.imageFallback {
+  width: 100%;
+  height: 100%;
+  background: #e8e8e8;
+}
+
+// ─── Caption ──────────────────────────────────────────────────────────────────
+
+.caption {
+  font-family: $OverusedGrotesk;
+  font-weight: 500;
+  font-size: 1.2rem;
+  text-transform: uppercase;
+  color: $secondary;
+  line-height: 1.3;
+  padding: 0rem 0.5rem 0;
+  margin: 0;
+
+  @include media-breakpoint-down(md) {
+    padding: 0.6rem $offset_m 0;
+  }
+}
+
+// ─── Text item ────────────────────────────────────────────────────────────────
+
+.textItem {
+  padding: 2.4rem 1rem;
+
+  @include media-breakpoint-down(md) {
+    padding: 2rem 1rem;
+  }
+
+  p {
+    font-family: $OverusedGrotesk;
+    font-weight: 500;
+    font-size: font-size('sm');
+    line-height: 1.5;
+    color: $secondary;
+    margin: 0 0 1.2rem;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+
+    @include media-breakpoint-down(md) {
+      font-size: font-size('sm', mobile);
+    }
+  }
+
+  h1,
+  h2,
+  h3 {
+    font-family: $OverusedGrotesk;
+    font-weight: 600;
+    font-size: font-size('sm');
+    text-transform: uppercase;
+    line-height: 1.3;
+    color: $secondary;
+    margin: 0 0 0.4rem;
+
+    @include media-breakpoint-down(md) {
+      font-size: font-size('sm', mobile);
+    }
+  }
+
+  strong,
+  b {
+    font-weight: 600;
+  }
+}
+
+// ─── Product item ─────────────────────────────────────────────────────────────
+
+.productItem {
+  aspect-ratio: 1 / 1;
+  position: relative;
+  overflow: hidden;
+}

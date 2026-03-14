@@ -84,12 +84,7 @@ export default defineType({
     defineField({
       name: 'characteristics',
       title: 'Characteristics',
-      type: 'array',
-      of: [
-        {
-          type: 'characteristic',
-        },
-      ],
+      type: 'characteristic',
       group: 'editorial',
     }),
     defineField({
@@ -100,6 +95,15 @@ export default defineType({
         {
           type: 'module.page',
         },
+      ],
+      group: 'editorial',
+    }),
+    defineField({
+      name: 'customProductOptions',
+      title: 'Custom product options',
+      type: 'array',
+      of: [
+        {type: 'customProductOption.color'},
       ],
       group: 'editorial',
     }),
@@ -120,6 +124,7 @@ export default defineType({
       title: 'Orden',
       type: 'string',
       group: 'editorial',
+      hidden: true,
     }),
     defineField({
       name: 'store',

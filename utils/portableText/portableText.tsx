@@ -11,6 +11,7 @@ export const portableBlockComponents = (): PortableTextComponents => {
       h3: ({ children }: any) => <h3>{children}</h3>,
     },
     marks: {
+      strong: ({ children }: any) => <strong style={{ fontWeight: 600 }}>{children}</strong>,
       annotationLinkExternal: ({ value, children }) => {
         const href = value?.url; // ← field name from your schema
 

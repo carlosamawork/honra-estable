@@ -139,3 +139,14 @@ SHOPIFY_STORE_DOMAIN=honra-shop.myshopify.com
 - Do NOT write GROQ queries inline in page components.
 - Do NOT use `any` in TypeScript — find the correct type or create one.
 - Do NOT use default exports for components.
+
+## Skills — cuando usarlos
+
+- Cualquier tarea relacionada con SEO, metadata o structured 
+  data → usar skill seo-metadata
+- Cualquier implementación desde Figma → usar skill figma-maquetador
+- Cualquier schema de Sanity o query GROQ → usar skill sanity-schema-builder
+- Cualquier animación o efecto 3D → usar skill animaciones-3d
+- Cualquier integración con Shopify → usar skill shopify-storefront
+- Cualquier problema de rendimiento → usar skill debug-performance
+- Cualquier renderer de PortableText → usar skill portabletext-renderer

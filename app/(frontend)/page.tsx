@@ -1,3 +1,4 @@
+import type { Viewport } from 'next'
 import HomeComponent from '@/components/Home';
 import { getDefaultSEO } from '@/sanity/queries/common/defaultSEO';
 import { getHome, getHomeSEO } from '@/sanity/queries/queries/home';
@@ -7,8 +8,7 @@ import { BASE_IMAGE_HEIGHT, BASE_IMAGE_URL, BASE_IMAGE_WIDTH, BASE_URL, buildUrl
 export const revalidate = 1 // revalidate to work set to 1, then we change it to 10
 
 export async function generateMetadata() {
-  const page = await getHomeSEO();
-  const defaultSEO = await getDefaultSEO();
+  const [page, defaultSEO] = await Promise.all([getHomeSEO(), getDefaultSEO()]);
 
   if (!page) {
     return {
@@ -22,8 +22,7 @@ export async function generateMetadata() {
         googleBot: {
           index: false,
           follow: true,
-          'max-video-preview': -1,
-          'max-image-preview': 'large',
+                    'max-image-preview': 'large',
           'max-snippet': -1,
         },
       },
@@ -38,8 +37,6 @@ export async function generateMetadata() {
     metadataBase: BASE_URL,
     title: `${page.seo?.title || siteTitle}`,
     description: page.seo?.description || siteDescription,
-    generator: 'Next.js',
-    applicationName: 'Conti, Cert. by ama.work',
     openGraph: {
       title: `${page.seo?.title || siteTitle}`,
       description: page.seo?.description || siteDescription,
@@ -61,8 +58,7 @@ export async function generateMetadata() {
       googleBot: {
         index: true,
         follow: true,
-        'max-video-preview': -1,
-        'max-image-preview': 'large',
+                'max-image-preview': 'large',
         'max-snippet': -1,
       },
     },
@@ -79,6 +75,10 @@ export async function generateMetadata() {
       ],
     },
   }
+}
+
+export const viewport: Viewport = {
+  themeColor: '#ffffff',
 }
 
 export default async function Home() {

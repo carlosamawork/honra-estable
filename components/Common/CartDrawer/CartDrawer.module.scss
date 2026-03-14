@@ -1,0 +1,225 @@
+@use '@/styles/common/variables' as *;
+@use '@/styles/mixins/breakpoints' as *;
+@use '@/styles/mixins/utils' as *;
+
+$cart-width: 37rem;
+$cart-bg: #fff;
+$header-h: 5.2rem;
+$footer-h: 5.6rem;
+
+// ─── Backdrop ─────────────────────────────────────────────────────────────────
+
+.backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 99;
+}
+
+// ─── Drawer ───────────────────────────────────────────────────────────────────
+
+.drawer {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: $cart-width;
+  height: 100dvh;
+  background: $cart-bg;
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+  transform: translateX(100%);
+  transition: transform 280ms ease;
+
+  @include media-breakpoint-down(sm) {
+    width: 100vw;
+  }
+
+  &.isOpen {
+    transform: translateX(0);
+  }
+}
+
+// ─── Header ───────────────────────────────────────────────────────────────────
+
+.header {
+  flex-shrink: 0;
+  height: $header-h;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 0.8rem;
+}
+
+.close {
+  font-family: $OverusedGrotesk;
+  font-size: 2.4rem;
+  font-weight: 500;
+  color: $secondary;
+  background: none;
+  border: none;
+  cursor: pointer;
+  line-height: 1;
+  padding: 0.4rem;
+
+  @include hover() {
+    opacity: 0.6;
+  }
+}
+
+.cartCount {
+  font-family: $OverusedGrotesk;
+  font-weight: 600;
+  font-size: 1.4rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: $secondary;
+}
+
+// ─── Items ────────────────────────────────────────────────────────────────────
+
+.items {
+  flex: 1;
+  overflow-y: auto;
+  @include remove-scrollbar();
+}
+
+.empty {
+  font-family: $OverusedGrotesk;
+  font-weight: 500;
+  font-size: font-size('xs');
+  text-transform: uppercase;
+  color: $secondary;
+  padding: 2.4rem 0.8rem;
+}
+
+// ─── Item ─────────────────────────────────────────────────────────────────────
+
+.item {
+  display: block;
+}
+
+.itemImage {
+  display: block;
+  width: 100%;
+  aspect-ratio: 370 / 352;
+  object-fit: cover;
+}
+
+.itemInfo {
+  display: grid;
+  grid-template-columns: 1fr 0.5fr;
+  justify-content: space-between;
+  align-items: baseline;
+  padding: 0.2rem 0.8rem 0;
+}
+
+.itemName {
+  font-family: $OverusedGrotesk;
+  font-weight: 600;
+  font-size: 1.2rem;
+  text-transform: uppercase;
+  color: $secondary;
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.itemPrice {
+  font-family: $OverusedGrotesk;
+  font-weight: 600;
+  font-size: 1.2rem;
+  text-transform: uppercase;
+  color: $secondary;
+  flex-shrink: 0;
+  margin-left: 0.8rem;
+}
+
+.itemQty {
+  display: flex;
+  align-items: center;
+  padding: 0.2rem 0rem 0;
+  gap: 0;
+}
+
+.itemQtyValue {
+  font-family: $OverusedGrotesk;
+  font-weight: 600;
+  font-size: 1.2rem;
+  text-transform: uppercase;
+  color: $secondary;
+  min-width: 2rem;
+  text-align: left;
+  margin-left: 0.8rem;
+}
+
+.itemQtyLabel {
+  font-family: $OverusedGrotesk;
+  font-weight: 600;
+  font-size: 1.2rem;
+  text-transform: uppercase;
+  color: $secondary;
+}
+
+.itemQtyControls {
+  display: flex;
+  align-items: center;
+  gap: 0rem;
+  margin-left: 1.6rem;
+
+  button {
+    font-family: $OverusedGrotesk;
+    font-weight: 600;
+    font-size: 1.4rem;
+    color: $secondary;
+    background: none;
+    border: none;
+    cursor: pointer;
+    line-height: 1;
+    padding: 0.2rem 1rem;
+    letter-spacing: 0.06em;
+
+    @include hover() {
+      opacity: 0.5;
+    }
+  }
+
+  span {
+    font-family: $OverusedGrotesk;
+    font-weight: 600;
+    font-size: 1.2rem;
+    text-transform: uppercase;
+    color: $secondary;
+    min-width: 2rem;
+    text-align: center;
+  }
+}
+
+// ─── Footer ───────────────────────────────────────────────────────────────────
+
+.footer {
+  flex-shrink: 0;
+  height: $footer-h;
+  background: $cart-bg;
+  border-top: 1px solid rgba($secondary, 0.1);
+}
+
+.checkout {
+  display: grid;
+  grid-template-columns: 1fr 0.5fr;
+  align-items: center;
+  padding: 0 0.8rem;
+  height: 100%;
+  font-family: $OverusedGrotesk;
+  font-weight: 600 !important;
+  font-size: font-size('sm');
+  text-transform: uppercase;
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+
+  @include hover() {
+    opacity: 0.7;
+  }
+}

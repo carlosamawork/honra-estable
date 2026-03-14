@@ -4,6 +4,7 @@
 import {ListItemBuilder, StructureBuilder, StructureResolver} from 'sanity/structure'
 import collections from './collectionStructure'
 import home from './homeStructure'
+import about from './aboutStructure'
 import pages from './pageStructure'
 import products from './productStructure'
 import settings from './settingStructure'
@@ -55,6 +56,7 @@ export const structure = (S: StructureBuilder) => {
     .title('Content')
     .items([
       home(S),
+      about(S),
       pages(S),
       S.divider(),
       collections(S),

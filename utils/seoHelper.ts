@@ -3,48 +3,25 @@
 // 🧭 Determine the base URL depending on the environment
 export const BASE_URL = new URL(
 	process.env.NODE_ENV === "production"
-		? "https://www.ama.work"
-		: "https://staging.ama.work"
+		? "https://honra.es"
+		: "http://localhost:3000"
 );
 
 // 🧱 Helper function for consistent URL creation
 export const buildUrl = (path = "/") => new URL(path, BASE_URL).toString();
 
 // 🌍 Global site metadata
-export const siteTitle = "SITE TITLE TO SET";
+export const siteTitle = "Honra";
 export const siteDescription =
-	"SITE DESCRIPTION TO SET";
-
-// ⚠️ Warn developer if siteTitle or siteDescription are not set
-if (process.env.NODE_ENV === "development") {
-	if (BASE_URL.href.includes("ama")) {
-		console.warn(
-			"%c⚠️ You should update BASE_URL in lib/seoHelper.js with your project URL!",
-			"color: orange; font-weight: bold;"
-		);
-	}
-	if (siteTitle === "SITE TITLE TO SET") {
-		console.warn(
-			"%c⚠️ You should update siteTitle in lib/seoHelper.js with your project name and information!",
-			"color: orange; font-weight: bold;"
-		);
-	}
-	if (siteDescription === "SITE DESCRIPTION TO SET") {
-		console.warn(
-			"%c⚠️ You should update siteDescription in lib/seoHelper.js with your project description!",
-			"color: orange; font-weight: bold;"
-		);
-	}
-}
+	"Acne Studios' mission is to be a progressive luxury house responding to the significant questions of our time.";
 
 // 🔗 Social & canonical links
-export const linkInstagram = "https://www.instagram.com/ama.work_/";
-export const canonicalStudio = buildUrl("/studio");
+export const linkInstagram = "https://www.instagram.com/honra/";
 export const canonicalHome = buildUrl("/");
-export const canonicalAbout = buildUrl("/about"); // example if needed
+export const canonicalShop = buildUrl("/shop");
 
 // 🖼️ Images & favicons
-export const BASE_IMAGE_URL = buildUrl("/images/cc_ama_fbshare_1200x800.jpg");
+export const BASE_IMAGE_URL = buildUrl("/images/honra_og.jpg");
 export const BASE_IMAGE_WIDTH = 1200;
 export const BASE_IMAGE_HEIGHT = 800;
 

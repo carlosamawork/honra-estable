@@ -1,0 +1,336 @@
+@use '@/styles/mixins/breakpoints' as *;
+@use '@/styles/mixins/utils' as *;
+@use '@/styles/common/variables' as *;
+
+// ─── Layout ───────────────────────────────────────────────────────────────────
+
+.product {
+  background-color: #fff;
+  
+  min-height: 100vh;
+  position: relative;
+}
+
+.topSection{
+  display: grid;
+  grid-template-columns: 58.33% 1fr;
+  grid-template-rows: auto;
+}
+
+// ─── Gallery ──────────────────────────────────────────────────────────────────
+
+.gallery {
+  grid-column: 1;
+  grid-row: 1;
+}
+
+.galleryItem {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 834 / 800;
+  overflow: hidden;
+}
+
+// ─── Info panel ───────────────────────────────────────────────────────────────
+
+.info {
+  grid-column: 2;
+  grid-row: 1;
+  position: sticky;
+  top: 74px;
+  height: calc(100vh - 100px);
+  overflow-y: auto;
+  padding: 104px 30% 40px 20%;
+
+  @include remove-scrollbar;
+}
+
+.infoInner {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.title {
+  font-family: $Outfit;
+  font-weight: 600;
+  font-size: 24px;
+  line-height: 1.1;
+  color: $secondary;
+  margin: 0 0 16px;
+}
+
+.price {
+  font-family: $OverusedGrotesk;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 1.2;
+  color: $secondary;
+  text-transform: uppercase;
+  letter-spacing: 0.01em;
+  margin: 0 0 12px;
+}
+
+.description {
+  font-family: $OverusedGrotesk;
+  font-weight: 600;
+  font-size: 12px;
+  line-height: 1.4;
+  color: $secondary;
+  margin: 0 0 32px;
+
+  p {
+    margin: 0;
+  }
+}
+
+// ─── Color selector ───────────────────────────────────────────────────────────
+
+.colorSelector {
+  margin-bottom: 24px;
+}
+
+.colorLabel {
+  font-family: $OverusedGrotesk;
+  font-weight: 600;
+  font-size: 12px;
+  line-height: 1.2;
+  color: $secondary;
+  margin: 0 0 8px;
+}
+
+.colors {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.colorSwatch {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background-color: var(--swatch-color, #ccc);
+  border: 2px solid transparent;
+  cursor: pointer;
+  padding: 0;
+  transition: border-color $transition-duration;
+
+  @include hover {
+    border-color: $secondary;
+  }
+
+  &.colorSwatchActive {
+    border-color: $secondary;
+  }
+}
+
+// ─── Add to cart ──────────────────────────────────────────────────────────────
+
+.addToCart {
+  font-family: $OverusedGrotesk;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 1.2;
+  color: $secondary;
+  text-transform: uppercase;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  margin-bottom: 32px;
+  text-align: left;
+
+  @include hover {
+    opacity: 0.6;
+  }
+
+  &:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+  }
+}
+
+// ─── Accordion (characteristics) ─────────────────────────────────────────────
+
+// .accordion {
+//   border-top: 1px solid rgba($secondary, 0.15);
+
+//   &:last-of-type {
+//     border-bottom: 1px solid rgba($secondary, 0.15);
+//   }
+// }
+
+.accordionTrigger {
+  font-family: $OverusedGrotesk;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 1.2;
+  color: $secondary;
+  text-transform: uppercase;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 12px 0;
+  width: 100%;
+  text-align: left;
+
+  @include hover {
+    opacity: 0.6;
+  }
+}
+
+.accordionContent {
+  padding-bottom: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.accordionImage {
+  width: 100%;
+}
+
+.accordionBody {
+  font-family: $OverusedGrotesk;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 1.4;
+  color: $secondary;
+
+  p {
+    margin: 0 0 8px;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+}
+
+// ─── Modules (campaign images) ────────────────────────────────────────────────
+
+.module {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: repeat(var(--module-columns, 1), 1fr);
+  position: relative;
+  overflow: hidden;
+}
+
+.moduleFull {
+  height: 100vh;
+}
+
+.moduleMedium {
+  height: 60vh;
+}
+
+.moduleAuto {
+  height: auto;
+  aspect-ratio: 1440 / 800;
+}
+
+.moduleItem {
+  position: relative;
+  overflow: hidden;
+}
+
+.moduleText {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 24px;
+  font-family: $OverusedGrotesk;
+  font-size: 14px;
+  line-height: 1.4;
+  color: $secondary;
+}
+
+// ─── Related products ─────────────────────────────────────────────────────────
+
+.related {
+  grid-column: 1 / -1;
+  padding: 32px 0px 0;
+}
+
+.relatedTitle {
+  font-family: $OverusedGrotesk;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: normal;
+  color: $secondary;
+  text-transform: uppercase;
+  margin: 0 0 8px;
+  padding: 0 16px;
+}
+
+.relatedGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
+}
+
+.relatedCard {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+}
+
+.relatedImage {
+  position: relative;
+  aspect-ratio: 720 / 674;
+  overflow: hidden;
+}
+
+.relatedName {
+  font-family: $OverusedGrotesk;
+  font-weight: 600;
+  font-size: 12px;
+  line-height: normal;
+  color: $secondary;
+  text-transform: uppercase;
+  padding: 12px 16px;
+  margin: 0;
+}
+
+// ─── Responsive ───────────────────────────────────────────────────────────────
+
+@include media-breakpoint-down(md) {
+  .product {
+    display: block;
+  }
+
+  .gallery {
+    width: 100%;
+  }
+
+  .galleryItem {
+    aspect-ratio: 4 / 5;
+  }
+
+  .info {
+    position: static;
+    padding: 24px 16px 32px;
+  }
+
+  .title {
+    font-size: 20px;
+  }
+
+  .module {
+    aspect-ratio: auto;
+    height: auto;
+    min-height: 50vw;
+  }
+
+  .moduleFull {
+    height: 60vh;
+  }
+
+  .moduleMedium {
+    height: 40vh;
+  }
+
+  .related {
+    padding: 24px 0px 0;
+  }
+}

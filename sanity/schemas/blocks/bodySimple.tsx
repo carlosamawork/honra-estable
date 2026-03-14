@@ -18,6 +18,7 @@ export default defineField({
       ],
       marks: {
         decorators: [
+          { title: 'Strong', value: 'strong' },
         ],
         annotations: [
           { name: 'annotationLinkEmail', type: 'annotationLinkEmail', },

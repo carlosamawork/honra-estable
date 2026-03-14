@@ -1,4 +1,5 @@
 @use "./styles/mixins/breakpoints.scss" as *;
+@use "./styles/common/variables.scss" as *;
 
 .home {
   background: #fff;
@@ -96,9 +97,11 @@
 
   h3,
   p {
+    font-family: $OverusedGrotesk;
+    font-weight: 600;
     margin: 0;
-    font-size: 1.3rem;
-    line-height: 1.2;
+    font-size: 12px;
+    line-height: 1.3;
   }
 
   h3 {
@@ -111,15 +114,18 @@
   padding: 1rem 0.8rem;
 
   p {
+    font-family: $OverusedGrotesk;
+    font-weight: 500;
     margin: 0;
-    font-size: 1.25rem;
-    line-height: 1.28;
+    font-size: 14px;
+    line-height: 1.2;
   }
 
-  h1{
-    font-size: 25px;
-    line-height: 1.1;
+  h1 {
+    font-family: $Outfit;
     font-weight: 500;
+    font-size: 24px;
+    line-height: 1.1;
   }
 }
 

@@ -29,24 +29,17 @@ export default defineField({
               title: 'Image',
               type: 'image',
               options: { hotspot: true },
-              validation: (Rule) => Rule.required(),
             }),
             // Body
             defineField({
               name: 'body',
               title: 'Body',
-              type: 'array',
-              of: [{
-                type: 'bodySimple',
-              }],
-              validation: (Rule) => Rule.required(),
+              type: 'bodySimple',
             }),
           ]
         }
       ],
-      validation: (Rule) => Rule.required().min(1),
-    }),
-    
+    }),   
   ],
   preview: {
     select: {

@@ -24,8 +24,9 @@ const documents = [page, product, productVariant, collection, legal]
 // Singleton document types
 import home from './singletons/home'
 import settings from './singletons/settings'
+import about from './singletons/about'
 
-const singletons = [home, settings]
+const singletons = [home, settings, about]
 
 // Block content
 import body from './blocks/body'
@@ -46,6 +47,7 @@ import links from './objects/global/links'
 import notFoundPage from './objects/global/notFoundPage'
 import heroCollection from './objects/hero/collection'
 import heroHome from './objects/hero/home'
+import heroAbout from './objects/hero/about'
 import heroPage from './objects/hero/page'
 import moduleAccordion from './objects/module/accordion'
 import accordionBody from './objects/module/accordionBody'
@@ -71,6 +73,8 @@ import shopifyCollectionRule from './objects/shopify/shopifyCollectionRule'
 import shopifyProduct from './objects/shopify/shopifyProduct'
 import shopifyProductVariant from './objects/shopify/shopifyProductVariant'
 import characteristic from './objects/module/characteristic'
+import customProductOptionColor from './objects/customProductOption/color'
+import customProductOptionColorObject from './objects/customProductOption/colorObject'
 
 // Collections
 import collectionGroup from './objects/collection/group'
@@ -86,6 +90,7 @@ const objects = [
   linkSocial,
   notFoundPage,
   heroHome,
+  heroAbout,
   heroPage,
   moduleAccordion,
   accordionBody,
@@ -115,7 +120,9 @@ const objects = [
   heroCollection,
   seoShopify,
   modulePage,
-  characteristic
+  characteristic,
+  customProductOptionColor,
+  customProductOptionColorObject,
 ]
 
 export const schemaTypes = [...annotations, ...singletons, ...objects, ...blocks, ...documents]

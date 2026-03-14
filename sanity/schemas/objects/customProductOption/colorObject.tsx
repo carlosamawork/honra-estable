@@ -1,19 +1,16 @@
 import React from 'react'
 import {defineField} from 'sanity'
 
-const ColorPreview = ({color}: {color: string}) => {
-  return (
-    <div
-      style={{
-        backgroundColor: color,
-        borderRadius: 'inherit',
-        display: 'flex',
-        height: '100%',
-        width: '100%',
-      }}
-    />
-  )
-}
+const ColorPreview = ({color}: {color: string}) => (
+  <div
+    style={{
+      backgroundColor: color,
+      borderRadius: 'inherit',
+      height: '100%',
+      width: '100%',
+    }}
+  />
+)
 
 export default defineField({
   name: 'customProductOption.colorObject',
@@ -29,21 +26,25 @@ export default defineField({
     }),
     defineField({
       name: 'color',
-      title: 'Color',
-      type: 'color',
-      options: {disableAlpha: true},
-      validation: (Rule) => Rule.required(),
+      title: 'Color (hex)',
+      type: 'string',
+      description: 'Hex color, e.g. #E87040',
+      validation: (Rule) =>
+        Rule.required().regex(/^#([0-9a-fA-F]{3}|[0-9a-fA-F]{6})$/, {
+          name: 'hex',
+          invert: false,
+        }),
     }),
   ],
   preview: {
     select: {
-      color: 'color.hex',
+      color: 'color',
       title: 'title',
     },
     prepare(selection) {
       const {color, title} = selection
       return {
-        media: <ColorPreview color={color} />,
+        media: color ? <ColorPreview color={color} /> : undefined,
         subtitle: color,
         title,
       }
