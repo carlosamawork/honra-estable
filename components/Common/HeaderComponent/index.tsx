@@ -2,7 +2,7 @@
 
 import Link from 'next/link'
 import s from './HeaderComponent.module.scss'
-import { useContext, useEffect, useRef } from 'react'
+import { useContext, useEffect, useRef, useState } from 'react'
 import { motion } from 'framer-motion'
 import { HeaderData } from '@/sanity/types'
 import { CartContext } from '@/context/shopContext'
@@ -14,11 +14,12 @@ type HeaderProps = {
 export default function HeaderComponent({ data }: HeaderProps) {
   const headerRef = useRef<HTMLElement>(null)
   const { cart, setCartOpen } = useContext(CartContext)
+  const [menuOpen, setMenuOpen] = useState(false)
 
   const fallbackLinks = [
-    {title: 'Shop', url: '/shop'},
-    {title: 'About', url: '/about'},
-    {title: 'Explore', url: '/explore'},
+    { title: 'Shop', url: '/shop' },
+    { title: 'About', url: '/about' },
+    { title: 'Explore', url: '/explore' },
   ]
 
   const links = data?.headerMenu?.links?.length ? data.headerMenu.links : fallbackLinks
@@ -31,52 +32,100 @@ export default function HeaderComponent({ data }: HeaderProps) {
   }, [])
 
   return (
-    <motion.header
-      className={`${s.header}`}
-      ref={headerRef}
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ duration: 0.3, delay: 0.5 }}
-    >
-      <Link href="/" className={s.brand} aria-label="Honra home">
-        honra<span>®</span>
-      </Link>
-
-      <nav className={s.nav} aria-label="Main navigation">
-        {links.slice(0, 3).map((item) => {
-          const href = 'url' in item && item.url ? item.url : '/'
-          const title = item.title || 'Link'
-          const isExternal = href.startsWith('http')
-          const openInNewWindow = 'newWindow' in item && !!item.newWindow
-          if (isExternal) {
-            return (
-              <a
-                key={title}
-                href={href}
-                target={openInNewWindow ? '_blank' : undefined}
-                rel={openInNewWindow ? 'noopener noreferrer' : undefined}
-              >
-                {title}
-              </a>
-            )
-          }
-
-          return (
-            <Link key={title} href={href}>
-              {title}
-            </Link>
-          )
-        })}
-      </nav>
-
-      <button
-        className={s.cart}
-        type="button"
-        aria-label="Abrir carrito"
-        onClick={() => setCartOpen(true)}
+    <>
+      <motion.header
+        className={s.header}
+        ref={headerRef}
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.3, delay: 0.5 }}
       >
-        CART ({cart.length})
-      </button>
-    </motion.header>
+        <Link href="/" className={s.brand} aria-label="Honra home">
+          <svg width="177" height="54" viewBox="0 0 177 54" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M0 52.2078V0.576172H12.9073V21.4973C14.0496 19.7073 15.4774 18.4207 17.0765 17.5257C18.6756 16.6306 20.5032 16.1831 22.6164 16.1831C25.3577 16.1831 27.4138 16.9663 28.8416 18.5885C30.2694 20.2107 30.9547 22.5602 30.9547 25.6368V52.2078H17.9903V31.6223C17.9903 30.5594 17.7618 29.7204 17.3621 29.2169C16.9623 28.7135 16.334 28.4338 15.4774 28.4338C14.6778 28.4338 14.1067 28.7135 13.6498 29.3288C13.1929 29.9441 12.9644 30.7273 12.9644 31.7901V52.1519H0V52.2078Z" fill="black"/>
+          <path d="M32.2676 34.5876C32.2676 28.6581 33.7525 24.0711 36.6652 20.8266C39.5779 17.5822 43.69 15.96 48.9443 15.96C54.2557 15.96 58.3107 17.5822 61.2234 20.8266C64.1361 24.0711 65.5639 28.6581 65.5639 34.5876C65.5639 40.5171 64.1361 45.1041 61.2234 48.3486C58.3107 51.5931 54.2557 53.2153 48.9443 53.2153C43.6329 53.2153 39.5208 51.5931 36.6081 48.3486C33.7525 45.1041 32.2676 40.5171 32.2676 34.5876ZM45.746 34.3639C45.746 36.993 46.0316 38.9509 46.5456 40.2375C47.0596 41.58 47.9163 42.1953 48.9443 42.1953C50.0294 42.1953 50.829 41.524 51.343 40.2375C51.857 38.8949 52.1426 36.9371 52.1426 34.3639C52.1426 31.7907 51.857 29.8328 51.343 28.5462C50.829 27.2596 49.9723 26.6443 48.9443 26.6443C47.8592 26.6443 47.0596 27.2596 46.5456 28.5462C46.0316 29.8328 45.746 31.7907 45.746 34.3639Z" fill="black"/>
+          <path d="M67.1074 52.2087V16.9672H79.615V22.1695C80.8143 20.1557 82.2421 18.7013 83.8984 17.7503C85.5546 16.7993 87.4393 16.2959 89.6667 16.2959C92.4081 16.2959 94.4641 17.079 95.8919 18.6453C97.3197 20.2116 98.005 22.5611 98.005 25.6377V52.0968H85.0977V31.6791C85.0977 30.6163 84.8693 29.7772 84.4695 29.2737C84.0697 28.7143 83.4415 28.4906 82.5848 28.4906C81.7852 28.4906 81.2141 28.8262 80.7572 29.4415C80.3003 30.0569 80.0719 30.896 80.0719 31.9588V52.2646H67.1074V52.2087Z" fill="black"/>
+          <path d="M100.572 52.2071V16.9656H112.794V21.8882C113.936 20.0982 115.307 18.6997 116.906 17.7488C118.505 16.7419 120.39 16.1825 122.56 16.0146V28.4331H122.275C119.077 28.4331 116.849 29.0484 115.536 30.2231C114.279 31.3979 113.594 33.5235 113.594 36.5442V52.2631H100.572V52.2071Z" fill="black"/>
+          <path d="M142.895 52.2084V48.3486C141.581 50.0268 140.267 51.2574 138.897 52.0406C137.526 52.8237 136.041 53.2153 134.442 53.2153C130.844 53.2153 128.045 51.5931 126.046 48.2927C124.048 45.0482 123.02 40.4612 123.02 34.5876C123.02 28.6581 124.048 24.0711 126.046 20.8266C128.045 17.5822 130.844 15.96 134.499 15.96C136.155 15.96 137.64 16.3515 139.011 17.1347C140.382 17.9178 141.695 19.1485 142.952 20.7707V16.9669H155.916V52.2084H142.895ZM136.212 34.5876C136.212 37.1049 136.498 38.9509 137.012 40.2375C137.526 41.524 138.326 42.1394 139.411 42.1394C140.496 42.1394 141.238 41.4681 141.809 40.1815C142.381 38.8949 142.609 37.0489 142.609 34.5876C142.609 32.1263 142.323 30.2244 141.809 28.9378C141.238 27.6512 140.439 26.9799 139.411 26.9799C138.383 26.9799 137.583 27.5953 137.069 28.8819C136.498 30.2244 136.212 32.0704 136.212 34.5876Z" fill="black"/>
+          <path d="M167.966 4.54785C169.109 4.54785 170.137 4.77161 171.165 5.16318C172.193 5.55475 173.049 6.17008 173.849 6.95323C174.591 7.68043 175.162 8.51951 175.505 9.47048C175.905 10.4214 176.076 11.4283 176.076 12.4912C176.076 13.61 175.848 14.6169 175.448 15.5678C175.048 16.5188 174.42 17.3579 173.678 18.141C172.878 18.8682 172.021 19.4835 170.993 19.8751C170.022 20.2667 168.994 20.4904 167.909 20.4904C166.824 20.4904 165.796 20.2667 164.768 19.8751C163.797 19.4835 162.883 18.8682 162.141 18.0851C161.398 17.3019 160.77 16.4628 160.37 15.5119C159.971 14.5609 159.742 13.554 159.742 12.5471C159.742 11.4843 159.971 10.4214 160.37 9.47048C160.77 8.46358 161.398 7.62449 162.198 6.84135C162.94 6.11414 163.797 5.55475 164.768 5.16318C165.853 4.77161 166.881 4.54785 167.966 4.54785ZM167.966 6.00226C167.053 6.00226 166.196 6.17008 165.453 6.44977C164.654 6.78541 163.968 7.23292 163.34 7.79231C162.712 8.40764 162.198 9.13484 161.855 9.97393C161.513 10.7571 161.341 11.5962 161.341 12.4912C161.341 13.3303 161.513 14.1693 161.798 14.9525C162.141 15.7356 162.598 16.4069 163.226 17.0222C163.854 17.6376 164.597 18.141 165.396 18.4766C166.196 18.8123 167.053 18.9801 167.966 18.9801C168.823 18.9801 169.68 18.8123 170.479 18.4766C171.279 18.141 172.021 17.6935 172.649 17.0782C173.278 16.4628 173.792 15.7916 174.134 15.0084C174.477 14.2253 174.648 13.3862 174.648 12.4912C174.648 11.5962 174.477 10.7571 174.192 10.0299C173.849 9.24672 173.392 8.57545 172.821 7.96013C172.193 7.28886 171.45 6.84135 170.651 6.50571C169.737 6.17008 168.88 6.00226 167.966 6.00226ZM164.54 7.96013H168.138C169.394 7.96013 170.365 8.18388 170.993 8.57545C171.621 9.02297 171.964 9.63829 171.964 10.4774C171.964 11.0368 171.793 11.5402 171.45 11.9318C171.107 12.3234 170.651 12.659 170.079 12.8268L172.078 16.6866H169.394L167.738 13.2184H167.053V16.6866H164.597V7.96013H164.54ZM166.995 9.47048V11.8199H167.852C168.366 11.8199 168.766 11.708 169.051 11.5402C169.337 11.3724 169.451 11.0927 169.451 10.7011C169.451 10.3096 169.337 9.97393 169.051 9.80611C168.766 9.63829 168.309 9.52642 167.738 9.52642H166.995V9.47048Z" fill="black"/>
+          </svg>
+        </Link>
+
+        <nav className={s.nav} aria-label="Main navigation">
+          {links.slice(0, 3).map((item) => {
+            const href = 'url' in item && item.url ? item.url : '/'
+            const title = item.title || 'Link'
+            const isExternal = href.startsWith('http')
+            const openInNewWindow = 'newWindow' in item && !!item.newWindow
+            if (isExternal) {
+              return (
+                <a
+                  key={title}
+                  href={href}
+                  target={openInNewWindow ? '_blank' : undefined}
+                  rel={openInNewWindow ? 'noopener noreferrer' : undefined}
+                >
+                  {title}
+                </a>
+              )
+            }
+            return (
+              <Link key={title} href={href}>
+                {title}
+              </Link>
+            )
+          })}
+        </nav>
+
+        <div className={s.actions}>
+          <button
+            className={`${s.hamburger} ${menuOpen ? s.isOpen : ''}`}
+            type="button"
+            aria-label={menuOpen ? 'Cerrar menú' : 'Abrir menú'}
+            aria-expanded={menuOpen}
+            onClick={() => setMenuOpen(!menuOpen)}
+          >
+            <span />
+            <span />
+            <span />
+          </button>
+
+          <button
+            className={s.cart}
+            type="button"
+            aria-label="Abrir carrito"
+            onClick={() => setCartOpen(true)}
+          >
+            CART ({cart.length})
+          </button>
+        </div>
+      </motion.header>
+
+      {/* Mobile menu overlay */}
+      <div
+        className={`${s.mobileMenu} ${menuOpen ? s.mobileMenuOpen : ''}`}
+        aria-hidden={!menuOpen}
+      >
+        <nav className={s.mobileNav} aria-label="Mobile navigation">
+          {links.map((item) => {
+            const href = 'url' in item && item.url ? item.url : '/'
+            const title = item.title || 'Link'
+            const isExternal = href.startsWith('http')
+            if (isExternal) {
+              return (
+                <a key={title} href={href} onClick={() => setMenuOpen(false)}>
+                  {title}
+                </a>
+              )
+            }
+            return (
+              <Link key={title} href={href} onClick={() => setMenuOpen(false)}>
+                {title}
+              </Link>
+            )
+          })}
+        </nav>
+      </div>
+    </>
   )
 }

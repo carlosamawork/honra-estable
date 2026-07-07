@@ -1,0 +1,81 @@
+@use '../../styles/mixins/breakpoints' as *;
+@use '../../styles/common/variables' as *;
+
+.legal {
+  // Contenido a 146px del top (bajo el header fijo) y 16px laterales — Figma 336:4290
+  padding: 14.6rem 1.6rem 8rem;
+  min-height: 60vh;
+
+  // Contenido a 142px del top en mobile (Figma 336:4375)
+  @include media-breakpoint-down(sm) {
+    padding: 14.2rem 1.6rem 6rem;
+  }
+}
+
+// Título solo para lectores de pantalla — el diseño no muestra encabezado visible
+.srTitle {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.body {
+  font-family: $OverusedGrotesk;
+  font-weight: 600;
+  font-size: 1.6rem;
+  line-height: 1.1;
+  color: #000;
+
+  p {
+    margin: 0;
+    // La tipografía global fija 16px en p — aquí manda el tamaño del bloque
+    font-size: inherit;
+    line-height: inherit;
+
+    // Los párrafos vacíos del CMS marcan el ritmo vertical del diseño
+    &:empty {
+      height: 1.76rem;
+    }
+  }
+
+  h3 {
+    margin: 0;
+    font-size: 1.6rem;
+    font-weight: 600;
+    line-height: 1.1;
+    text-transform: uppercase;
+  }
+
+  ul {
+    margin: 0;
+    padding-left: 2.4rem;
+  }
+
+  li {
+    margin: 0;
+  }
+
+  a {
+    text-decoration: underline;
+    color: inherit;
+  }
+
+  // Mobile: texto a 10px (Figma 336:4375)
+  @include media-breakpoint-down(sm) {
+    font-size: 1rem;
+
+    p:empty {
+      height: 1.2rem;
+    }
+
+    h3 {
+      font-size: 1rem;
+    }
+  }
+}

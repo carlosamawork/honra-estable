@@ -19,7 +19,7 @@ export default function CartDrawer() {
   function handleQuantityChange(item: any, delta: number) {
     const next = item.variantQuantity + delta
     if (next <= 0) {
-      removeCartItem(item.productId)
+      removeCartItem(item.store?.gid)
     } else {
       updateCartItem(item, next)
     }
@@ -76,7 +76,7 @@ export default function CartDrawer() {
                     {formatPrice((item.store?.price ?? 0) * item.variantQuantity)}
                   </span>
                 </div>
-                <div className={s.itemInfo}>
+                <div className={s.itemMeta}>
                   <div className={s.itemQty}>
                     <span className={s.itemQtyLabel}>Cant.</span>
                     <div className={s.itemQtyControls}>
@@ -94,7 +94,9 @@ export default function CartDrawer() {
                       </button>
                     </div>
                   </div>
-                  <div className={s.itemQtyValue}>{item.variantQuantity}</div>
+                  <span className={s.itemQtyValue}>
+                    {String(item.variantQuantity).padStart(2, '0')}
+                  </span>
                 </div>
 
               </article>
@@ -102,24 +104,29 @@ export default function CartDrawer() {
           )}
         </div>
 
-        {/* Footer */}
+        {/* Footer (Figma 311:3930): total + CHECKOUT, y CONTINUE SHOPPING debajo */}
         <div className={s.footer}>
-          {checkoutUrl ? (
-            <a
-              href={checkoutUrl}
-              className={s.checkout}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <span>Process to checkout</span>
-              <span>{formatPrice(total)}</span>
-            </a>
-          ) : (
-            <div className={s.checkout}>
-              <span>Process to checkout</span>
-              <span>{formatPrice(total)}</span>
-            </div>
-          )}
+          <div className={s.footerRow}>
+            <span className={s.total}>{formatPrice(total)}</span>
+            {checkoutUrl ? (
+              <a
+                href={checkoutUrl}
+                className={s.checkout}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Checkout
+              </a>
+            ) : (
+              <span className={`${s.checkout} ${s.checkoutDisabled}`}>Checkout</span>
+            )}
+          </div>
+          <button
+            className={s.continueShopping}
+            onClick={() => setCartOpen(false)}
+          >
+            Continue shopping
+          </button>
         </div>
       </aside>
     </>

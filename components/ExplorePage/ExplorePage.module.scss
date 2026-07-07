@@ -63,11 +63,14 @@
 
 .module {
   --columns: 1;
+  --columns-mobile: 1;
   display: grid;
   grid-template-columns: repeat(var(--columns), minmax(0, 1fr));
+  align-items: start;
 
-  @include media-breakpoint-down(md) {
-    grid-template-columns: 1fr;
+  // Mobile mantiene 2 columnas en los módulos multi-columna (Figma 336:4291)
+  @include media-breakpoint-down(sm) {
+    grid-template-columns: repeat(var(--columns-mobile), minmax(0, 1fr));
   }
 }
 
@@ -80,6 +83,10 @@
 .isMedium .imageWrapper {
   aspect-ratio: 2 / 3;
   position: relative;
+
+  @include media-breakpoint-down(md) {
+    aspect-ratio: 4 / 3;
+  }
 }
 
 .isFull .imageWrapper {
@@ -88,6 +95,11 @@
 
   @include media-breakpoint-up(lg) {
     height: 100vh;
+  }
+
+  @include media-breakpoint-down(md) {
+    height: auto;
+    aspect-ratio: 3 / 4;
   }
 }
 
@@ -101,6 +113,11 @@
 
 .textModuleItem {
   overflow: visible;
+
+  // Los textos ocupan todo el ancho en mobile (Figma 336:4346)
+  @include media-breakpoint-down(sm) {
+    grid-column: 1 / -1;
+  }
 }
 
 .imageWrapper {
@@ -128,6 +145,12 @@
 
   @include media-breakpoint-down(md) {
     padding: 0.6rem $offset_m 0;
+  }
+
+  // Captions a 10px y 16px laterales (Figma 336:4322)
+  @include media-breakpoint-down(sm) {
+    font-size: 1rem;
+    padding: 0.4rem 1.6rem 0;
   }
 }
 
@@ -176,6 +199,20 @@
   strong,
   b {
     font-weight: 600;
+  }
+
+  // Notas a 12px y 16px laterales en mobile (Figma 336:4346)
+  // Al final del selector para ganar en cascada a los bloques down(md)
+  @include media-breakpoint-down(sm) {
+    padding: 1.6rem;
+
+    p,
+    h1,
+    h2,
+    h3 {
+      font-size: 12px;
+      line-height: normal;
+    }
   }
 }
 

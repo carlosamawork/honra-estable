@@ -8,6 +8,7 @@ import about from './aboutStructure'
 import pages from './pageStructure'
 import products from './productStructure'
 import settings from './settingStructure'
+import shop from './shopStructure'
 import orderProducts from './orderProductStructure'
 import category from './categoryStructure'
 import legal from './legalStructure'
@@ -42,6 +43,7 @@ const hiddenDocTypes = (listItem: any) => {
     'product',
     'productVariant',
     'settings',
+    'shop',
     'posts',
     'category',
     'postTag',
@@ -59,6 +61,7 @@ export const structure = (S: StructureBuilder) => {
       about(S),
       pages(S),
       S.divider(),
+      shop(S),
       collections(S),
       products(S),
       orderProducts(S, context), 

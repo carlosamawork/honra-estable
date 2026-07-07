@@ -1,7 +1,7 @@
 // Document types which:
 // - cannot be created in the 'new document' menu
 // - cannot be duplicated, unpublished or deleted
-export const LOCKED_DOCUMENT_TYPES = ['settings', 'home', 'notFoundPage']
+export const LOCKED_DOCUMENT_TYPES = ['settings', 'home', 'shop', 'notFoundPage']
 
 // Currency code (ISO 4217) to use when displaying prices in the studio
 // https://en.wikipedia.org/wiki/ISO_4217

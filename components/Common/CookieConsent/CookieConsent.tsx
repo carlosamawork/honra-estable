@@ -55,12 +55,18 @@ const CookieConsent = () => {
           <h3>POLÍTICA DE PRIVACIDAD</h3>
           <p>
             Para obtener más información sobre cómo manejamos tus datos personales, puedes leer nuestra{' '}
-            <Link href="/faqs/#general-terms">Política de Privacidad</Link>.
+            <Link href="/legals/privacy-policy">Política de Privacidad</Link>.
           </p>
 
           <div className={s.actions}>
-            <button onClick={acceptAll}>ACEPTAR TODAS LAS COOKIES</button>
-            <button onClick={acceptRequiredOnly}>ACEPTAR SOLO FUNCIONAMIENTO</button>
+            <button onClick={acceptAll}>
+              <span className={s.labelLong}>ACEPTAR TODAS LAS COOKIES</span>
+              <span className={s.labelShort}>ACEPTAR</span>
+            </button>
+            <button onClick={acceptRequiredOnly}>
+              <span className={s.labelLong}>ACEPTAR SOLO FUNCIONAMIENTO</span>
+              <span className={s.labelShort}>DENEGAR</span>
+            </button>
           </div>
         </div>
       </div>

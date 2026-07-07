@@ -1,6 +1,6 @@
 import { cache } from 'react'
 import type { Viewport } from 'next'
-import { getShopProducts } from '@/sanity/queries/queries/shop'
+import { getShopModules, getShopProducts } from '@/sanity/queries/queries/shop'
 import { getDefaultSEO } from '@/sanity/queries/common/defaultSEO'
 import { ShopPage } from '@/components/ShopPage'
 import {
@@ -66,7 +66,7 @@ export const viewport: Viewport = {
 }
 
 export default async function Shop() {
-  const products = await getShopProducts()
+  const [products, modules] = await Promise.all([getShopProducts(), getShopModules()])
 
-  return <ShopPage products={products} />
+  return <ShopPage products={products} modules={modules} />
 }

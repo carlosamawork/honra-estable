@@ -1,6 +1,6 @@
 'use client'
 
-import { useContext, useState, type CSSProperties } from 'react'
+import { Fragment, useContext, useEffect, useState, type CSSProperties } from 'react'
 import Link from 'next/link'
 import { PortableText } from '@portabletext/react'
 import LazyImage from '@/components/Common/LazyImage'
@@ -13,8 +13,26 @@ import type {
 import { portableBlockComponents } from '@/utils/portableText/portableText'
 import s from './ProductPage.module.scss'
 
+export type VariantGalleryImage = {
+  url: string
+  width: number | null
+  height: number | null
+  altText: string | null
+}
+
+export type VariantGalleries = Record<string, VariantGalleryImage[]>
+
+export type ShopifyColorValue = {
+  name: string
+  swatchColor: string | null
+  swatchImageUrl: string | null
+}
+
 type Props = {
   product: ProductDetail
+  variantGalleries?: VariantGalleries
+  productImages?: VariantGalleryImage[]
+  shopifyColorValues?: ShopifyColorValue[]
 }
 
 const formatPrice = (value: number | null): string => {
@@ -28,18 +46,50 @@ const getHeightClass = (height?: string) => {
   return s.moduleAuto
 }
 
-export function ProductPage({ product }: Props) {
+export function ProductPage({
+  product,
+  variantGalleries,
+  productImages,
+  shopifyColorValues,
+}: Props) {
   const { addToCart } = useContext(CartContext)
   const [selectedVariant, setSelectedVariant] = useState<ProductVariant | null>(
     product.variants?.[0] ?? null
   )
   const [openAccordion, setOpenAccordion] = useState<number | null>(null)
 
-  const colorOption = product.customProductOptions?.find(
+  // Preselect the color coming from a card link (/products/handle?color=Beige)
+  useEffect(() => {
+    const color = new URLSearchParams(window.location.search).get('color')
+    if (!color) return
+    const variant = product.variants?.find((v) => v.store.option1 === color)
+    if (variant) setSelectedVariant(variant)
+  }, [product.variants])
+
+  const sanityColorOption = product.customProductOptions?.find(
     (opt) => opt.title.toLowerCase() === 'color'
   )
 
+  // Color swatches: Shopify option values (taxonomy/metaobject swatch) are the
+  // source of truth; Sanity hex or the CSS color name cover values without swatch
+  const colorValues: { title: string; color: string }[] = shopifyColorValues?.length
+    ? shopifyColorValues.map((value) => ({
+        title: value.name,
+        color:
+          value.swatchColor ??
+          sanityColorOption?.colors.find((c) => c.title === value.name)?.color ??
+          value.name.toLowerCase(),
+      }))
+    : (sanityColorOption?.colors ?? [])
+
   const selectedColorTitle = selectedVariant?.store?.option1 ?? null
+
+  // Gallery: selected variant (variant image + custom.gallery metafield),
+  // or the Shopify product images list for products without variant galleries
+  const galleryImages =
+    (selectedVariant && variantGalleries?.[selectedVariant.store.title]) ||
+    productImages ||
+    []
 
   function handleAddToCart() {
     if (!selectedVariant) return
@@ -48,31 +98,73 @@ export function ProductPage({ product }: Props) {
       1,
       product._id,
       product.title,
-      product.previewImage ?? selectedVariant.store.previewImageUrl ?? product.images?.[0]?.imageUrl
+      selectedVariant.store.previewImageUrl ?? product.previewImage ?? galleryImages[0]?.url
     )
   }
 
-  console.log('Product data:', product) // Debug log to check product data structure
+  const accordions = product.characteristics?.items?.map((item, itemIndex) => {
+    const accordionKey = itemIndex
+    const isOpen = openAccordion === accordionKey
+    return (
+      <div key={accordionKey} className={s.accordion}>
+        <button
+          className={s.accordionTrigger}
+          aria-expanded={isOpen}
+          onClick={() => setOpenAccordion(isOpen ? null : accordionKey)}
+        >
+          <span>+ {item.title}</span>
+        </button>
+        {isOpen && (
+          <div className={s.accordionContent}>
+            {item.image?.imageUrl && (
+              <div className={s.accordionImage}>
+                <LazyImage
+                  src={item.image.imageUrl}
+                  alt={item.image.alt || item.title || ''}
+                  width={item.image.metadata.dimensions.width}
+                  height={item.image.metadata.dimensions.height}
+                  filename={item.image.filename}
+                  fill={false}
+                />
+              </div>
+            )}
+            {item.body && (
+              <div className={s.accordionBody}>
+                <PortableText value={item.body} components={portableBlockComponents()} />
+              </div>
+            )}
+          </div>
+        )}
+      </div>
+    )
+  })
 
   return (
     <main className={s.product}>
       <div className={s.topSection}>
-        {/* LEFT — gallery */}
+        {/* LEFT — gallery (Shopify: variant image + variant gallery, or product images) */}
         <div className={s.gallery}>
-          {product.images?.map((img, i) => (
-            <div key={i} className={s.galleryItem}>
-              <LazyImage
-                src={img.imageUrl}
-                alt={img.alt || product.title}
-                width={img.metadata.dimensions.width}
-                height={img.metadata.dimensions.height}
-                filename={img.filename}
-                blurDataURL={img.ref}
-                fill={true}
-                sizes="(max-width: 768px) 100vw, 58vw"
-                objectFit="cover"
-              />
-            </div>
+          {galleryImages.map((img, i) => (
+            <Fragment key={`${selectedVariant?.store.title ?? 'product'}-${i}`}>
+              <div className={s.galleryItem}>
+                <LazyImage
+                  src={img.url}
+                  alt={img.altText || `${product.title}${selectedColorTitle ? ` — ${selectedColorTitle}` : ''}`}
+                  width={img.width ?? 1080}
+                  height={img.height ?? 1080}
+                  fill={true}
+                  sizes="(max-width: 768px) 100vw, 58vw"
+                  objectFit="cover"
+                />
+              </div>
+              {/* Mobile: descripción bajo la primera imagen (Figma 311:3827) */}
+              {i === 0 && product.descriptionHtml && (
+                <div
+                  className={s.descriptionMobile}
+                  dangerouslySetInnerHTML={{ __html: product.descriptionHtml }}
+                />
+              )}
+            </Fragment>
           ))}
         </div>
 
@@ -92,13 +184,13 @@ export function ProductPage({ product }: Props) {
             )}
 
             {/* Color selector */}
-            {colorOption && colorOption.colors.length > 0 && (
+            {colorValues.length > 0 && (
               <div className={s.colorSelector}>
                 {selectedColorTitle && (
                   <p className={s.colorLabel}>{selectedColorTitle}</p>
                 )}
                 <div className={s.colors}>
-                  {colorOption.colors.map((c) => {
+                  {colorValues.map((c) => {
                     const matchingVariant = product.variants?.find(
                       (v) => v.store.option1 === c.title
                     )
@@ -111,7 +203,15 @@ export function ProductPage({ product }: Props) {
                         aria-label={c.title}
                         aria-pressed={isSelected}
                         onClick={() => {
-                          if (matchingVariant) setSelectedVariant(matchingVariant)
+                          if (!matchingVariant) return
+                          setSelectedVariant(matchingVariant)
+                          const prefersReducedMotion = window.matchMedia(
+                            '(prefers-reduced-motion: reduce)'
+                          ).matches
+                          window.scrollTo({
+                            top: 0,
+                            behavior: prefersReducedMotion ? 'auto' : 'smooth',
+                          })
                         }}
                       />
                     )
@@ -131,49 +231,14 @@ export function ProductPage({ product }: Props) {
                 : 'Agregar al carrito'}
             </button>
 
-            {/* Characteristics accordion */}
-            {product.characteristics?.items?.map((item, itemIndex) => {
-                const accordionKey = itemIndex
-                const isOpen = openAccordion === accordionKey
-                return (
-                  <div key={accordionKey} className={s.accordion}>
-                    <button
-                      className={s.accordionTrigger}
-                      aria-expanded={isOpen}
-                      onClick={() => setOpenAccordion(isOpen ? null : accordionKey)}
-                    >
-                      <span>+ {item.title}</span>
-                    </button>
-                    {isOpen && (
-                      <div className={s.accordionContent}>
-                        {item.image?.imageUrl && (
-                          <div className={s.accordionImage}>
-                            <LazyImage
-                              src={item.image.imageUrl}
-                              alt={item.image.alt || item.title || ''}
-                              width={item.image.metadata.dimensions.width}
-                              height={item.image.metadata.dimensions.height}
-                              filename={item.image.filename}
-                              fill={false}
-                            />
-                          </div>
-                        )}
-                        {item.body && (
-                          <div className={s.accordionBody}>
-                            <PortableText
-                              value={item.body}
-                              components={portableBlockComponents()}
-                            />
-                          </div>
-                        )}
-                      </div>
-                    )}
-                  </div>
-                )
-              })}
+            {/* Characteristics accordion — desktop (en mobile van tras la galería) */}
+            <div className={s.accordionsDesktop}>{accordions}</div>
           </div>
         </aside>
       </div>
+
+      {/* Characteristics accordion — mobile (Figma 311:3832) */}
+      <section className={s.accordionsMobile}>{accordions}</section>
       {/* MODULES — campaign images (same pattern as Home) */}
       {product.modules?.map((module, moduleIndex) => {
         const columns = Math.min(Math.max(module.columns || 1, 1), 8)
@@ -222,15 +287,23 @@ export function ProductPage({ product }: Props) {
       {/* RELATED PRODUCTS */}
       {product.relatedProducts?.length > 0 && (
         <section className={s.related}>
-          <p className={s.relatedTitle}>Related product</p>
+          <p className={s.relatedTitle}>Related products</p>
           <div className={s.relatedGrid}>
-            {product.relatedProducts.map((rel) => (
-              <Link key={rel._id} href={`/products/${rel.handle}`} className={s.relatedCard}>
+            {product.relatedProducts.map((rel, relIndex) => (
+              <Link
+                key={`${rel._id}-${relIndex}`}
+                href={
+                  rel.color
+                    ? `/products/${rel.handle}?color=${encodeURIComponent(rel.color)}`
+                    : `/products/${rel.handle}`
+                }
+                className={s.relatedCard}
+              >
                 <div className={s.relatedImage}>
                   {rel.previewImage && (
                     <LazyImage
                       src={rel.previewImage}
-                      alt={rel.title}
+                      alt={rel.color ? `${rel.title} — ${rel.color}` : rel.title}
                       width={720}
                       height={674}
                       fill={true}

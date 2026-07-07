@@ -1,5 +1,5 @@
-@use "./styles/common/variables.scss" as *;
-@use "./styles/mixins/breakpoints.scss" as *;
+@use "@/styles/common/variables.scss" as *;
+@use "@/styles/mixins/breakpoints.scss" as *;
 
 .header {
   position: fixed;
@@ -39,7 +39,6 @@
   display: none;
   gap: clamp(1.6rem, 5vw, 7rem);
   align-items: center;
-  padding-top: 0.35rem;
 
   @include media-breakpoint-up(md) {
     display: flex;
@@ -61,6 +60,82 @@
   }
 }
 
+// ─── Actions (hamburger + cart) ────────────────────────────────────────────────
+
+.actions {
+  justify-self: end;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+
+  // Desktop: tercera columna (la 2ª la ocupa el nav)
+  @include media-breakpoint-up(md) {
+    grid-column: 3;
+  }
+
+  // Mobile (< 768px — ojo: down(md) en este proyecto llega hasta 992 y pisaría
+  // el rango tablet donde el nav está visible): ocupa de la columna central al
+  // final — CART centrado en el hueco, burger a la derecha
+  @include media-breakpoint-down(sm) {
+    grid-column: 2 / span 2;
+    width: 100%;
+    justify-content: space-between;
+
+    .cart {
+      order: -1;
+      padding-left: 33.33%;
+    }
+  }
+}
+
+// ─── Hamburger ─────────────────────────────────────────────────────────────────
+
+.hamburger {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 0.5rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0.8rem;
+  margin: -0.8rem;
+  min-width: 4.4rem;
+  min-height: 4.4rem;
+  align-items: center;
+
+  // Only show on mobile
+  @include media-breakpoint-up(md) {
+    display: none;
+  }
+
+  span {
+    display: block;
+    width: 2rem;
+    height: 1.5px;
+    background: #0f0f10;
+    transition: transform 240ms ease, opacity 240ms ease;
+    transform-origin: center;
+  }
+
+  // Transform to × when open
+  &.isOpen {
+    span:nth-child(1) {
+      transform: translateY(0.65rem) rotate(45deg);
+    }
+
+    span:nth-child(2) {
+      opacity: 0;
+    }
+
+    span:nth-child(3) {
+      transform: translateY(-0.65rem) rotate(-45deg);
+    }
+  }
+}
+
+// ─── Cart button ───────────────────────────────────────────────────────────────
+
 .cart {
   font-family: $OverusedGrotesk;
   font-weight: 600;
@@ -70,6 +145,62 @@
   font-size: 1.4rem;
   text-transform: uppercase;
   letter-spacing: 0.06em;
-  padding-top: 0.35rem;
   color: #101010;
+
+  @include media-breakpoint-down(sm) {
+    min-height: 4.4rem;
+    min-width: 4.4rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+  }
+}
+
+// ─── Mobile menu (dropdown bajo el header, alineado a la derecha) ───────────────
+
+.mobileMenu {
+  position: fixed;
+  top: 7.4rem;
+  right: 1.6rem;
+  z-index: 19;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 280ms ease;
+
+  @media (prefers-reduced-motion: reduce) {
+    transition: none;
+  }
+
+  // Hidden on desktop
+  @include media-breakpoint-up(md) {
+    display: none;
+  }
+
+  &.mobileMenuOpen {
+    opacity: 1;
+    pointer-events: auto;
+  }
+}
+
+.mobileNav {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+
+  a {
+    font-family: $OverusedGrotesk;
+    font-weight: 600;
+    font-size: 1.4rem;
+    line-height: 1.3;
+    text-transform: uppercase;
+    text-align: right;
+    color: #0f0f10 !important;
+    text-decoration: none;
+    // Área táctil ampliada sin alterar el diseño compacto
+    display: flex;
+    align-items: center;
+    min-height: 3rem;
+    padding: 0 0 0 1.2rem;
+  }
 }

@@ -1,7 +1,13 @@
 import { notFound } from 'next/navigation'
 import type { Viewport } from 'next'
 import { getProduct, getProductHandles, getProductSEO } from '@/sanity/queries/queries/product'
-import { ProductPage } from '@/components/ProductPage'
+import { getProductStorefrontData } from '@/lib/shopify'
+import {
+  ProductPage,
+  type ShopifyColorValue,
+  type VariantGalleries,
+  type VariantGalleryImage,
+} from '@/components/ProductPage'
 import {
   BASE_IMAGE_HEIGHT,
   BASE_IMAGE_URL,
@@ -83,9 +89,23 @@ export const viewport: Viewport = {
 
 export default async function ProductDetailPage({ params }: Props) {
   const { handle } = await params
-  const product = await getProduct(handle)
+  const [product, storefrontData] = await Promise.all([
+    getProduct(handle),
+    getProductStorefrontData(handle) as Promise<{
+      galleries: VariantGalleries
+      productImages: VariantGalleryImage[]
+      colorValues: ShopifyColorValue[]
+    }>,
+  ])
 
   if (!product) notFound()
 
-  return <ProductPage product={product} />
+  return (
+    <ProductPage
+      product={product}
+      variantGalleries={storefrontData.galleries}
+      productImages={storefrontData.productImages}
+      shopifyColorValues={storefrontData.colorValues}
+    />
+  )
 }

@@ -1,6 +1,7 @@
 'use client';
 
 import { PortableText } from '@portabletext/react';
+import Link from 'next/link';
 import type { CSSProperties } from 'react';
 import s from './Home.module.scss';
 import { portableBlockComponents } from '@/utils/portableText/portableText';
@@ -26,6 +27,8 @@ type ProductItem = {
   _key?: string;
   _type?: string;
   title?: string;
+  handle?: string | null;
+  color?: string | null;
   featuredImage?: string;
   price?: number;
 };
@@ -102,7 +105,12 @@ export default function HomeComponent({ data }: HomeProps) {
           <section
             key={module._key || `module-${moduleIndex}`}
             className={`${s.module} ${moduleHeightClass}`}
-            style={{ '--module-columns': columns } as CSSProperties}
+            style={
+              {
+                '--module-columns': columns,
+                '--module-columns-mobile': Math.min(columns, 2),
+              } as CSSProperties
+            }
           >
             {(module.items || []).map((item, itemIndex) => {
               const key = item._key || `item-${itemIndex}`;
@@ -118,12 +126,18 @@ export default function HomeComponent({ data }: HomeProps) {
                   {isImage && (
                     <div className={s.imageItem}>
                       {imageItem.image?.imageUrl ? (
-                        <LazyImage 
-                          src={imageItem.image.imageUrl} 
-                          alt={imageItem.image.alt || ''} 
+                        <LazyImage
+                          src={imageItem.image.imageUrl}
+                          alt={imageItem.image.alt || ''}
                           width={imageItem.image.metadata.dimensions.width}
                           height={imageItem.image.metadata.dimensions.height}
                           fill={true}
+                          sizes={
+                            columns > 1
+                              ? `(max-width: 768px) 50vw, ${Math.round(100 / columns)}vw`
+                              : '100vw'
+                          }
+                          objectFit="cover"
                          />
                       ) : (
                         <div className={s.imageFallback} />
@@ -137,30 +151,54 @@ export default function HomeComponent({ data }: HomeProps) {
                     </div>
                   )}
 
-                  {isProduct && (
-                    <>
-                    <div className={s.productItem}>
-                      {productItem.featuredImage ? (
-                        <LazyImage
-                          src={productItem.featuredImage}
-                          alt={productItem.title || 'Product image'}
-                          width={500}
-                          height={500}
-                          fill={true}
-                          objectFit='cover'
-                        />
-                      ) : (
-                        <div className={s.imageFallback} />
-                      )}
+                  {isProduct && (() => {
+                    const productContent = (
+                      <>
+                        <div className={s.productItem}>
+                          {productItem.featuredImage ? (
+                            <LazyImage
+                              src={productItem.featuredImage}
+                              alt={
+                                productItem.color
+                                  ? `${productItem.title || 'Product'} — ${productItem.color}`
+                                  : productItem.title || 'Product image'
+                              }
+                              width={500}
+                              height={500}
+                              fill={true}
+                              sizes={
+                                columns > 1
+                                  ? `(max-width: 768px) 100vw, ${Math.round(100 / columns)}vw`
+                                  : '100vw'
+                              }
+                              objectFit='cover'
+                            />
+                          ) : (
+                            <div className={s.imageFallback} />
+                          )}
+                        </div>
+                        <div className={s.productInfo}>
+                          <h3>{productItem.title || 'Product'}</h3>
+                          {/* <p>{formatPrice(productItem.price)}</p> */}
+                        </div>
+                      </>
+                    );
 
-                      
-                    </div>
-                    <div className={s.productInfo}>
-                      <h3>{productItem.title || 'Product'}</h3>
-                      {/* <p>{formatPrice(productItem.price)}</p> */}
-                    </div>
-                    </>
-                  )}
+                    return productItem.handle ? (
+                      <Link
+                        className={s.productLink}
+                        href={
+                          productItem.color
+                            ? `/products/${productItem.handle}?color=${encodeURIComponent(productItem.color)}`
+                            : `/products/${productItem.handle}`
+                        }
+                      >
+                        {productContent}
+                      </Link>
+                    ) : (
+                      productContent
+                    );
+                  })()}
                 </article>
               );
             })}

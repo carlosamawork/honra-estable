@@ -19,6 +19,52 @@
         grid-template-columns: 1fr 1fr 1fr 2fr;
         gap: 1.4rem;
     }
+
+    // En mobile el diseño usa el bloque .mobileFooter (Figma 333:3996)
+    @include media-breakpoint-down(md) {
+        display: none;
+    }
+}
+
+// ─── Footer mobile ───────────────────────────────────────────────────────────
+
+.mobileFooter {
+    display: none;
+
+    @include media-breakpoint-down(md) {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 3.6rem;
+        padding: 0.8rem 0.8rem 0;
+
+        p {
+            font-family: $OverusedGrotesk;
+            font-weight: 600;
+            font-size: 1rem;
+            line-height: 1.2;
+            text-transform: uppercase;
+            margin: 0;
+        }
+
+        a {
+            color: #101010 !important;
+        }
+    }
+}
+
+.mobileIcon {
+    display: block;
+
+    svg {
+        display: block;
+        width: 4.8rem;
+        height: auto;
+    }
+}
+
+.mobileLegal {
+    letter-spacing: 0.04em;
 }
 
 .logo {

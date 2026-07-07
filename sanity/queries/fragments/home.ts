@@ -19,12 +19,27 @@ export const homeModules = `
     items[]{
       _key,
       _type,
-      _type == "productItem" => @->{
-        _id,
+      // Soporta la forma nueva (productWithVariant) y las referencias antiguas (@->)
+      _type == "productItem" => {
+        _key,
         _type,
-        "title": coalesce(store.title, title),
-        "featuredImage": store.previewImageUrl,
-        "price": store.priceRange.minVariantPrice
+        "_id": coalesce(variant->_id, product->_id, @->_id),
+        "title": coalesce(product->store.title, @->store.title),
+        "handle": coalesce(product->store.slug.current, @->store.slug.current),
+        "featuredImage": coalesce(
+          variant->store.previewImageUrl,
+          product->store.previewImageUrl,
+          @->store.previewImageUrl
+        ),
+        "price": coalesce(
+          variant->store.price,
+          product->store.priceRange.minVariantPrice,
+          @->store.priceRange.minVariantPrice
+        ),
+        "color": select(
+          variant->store.option1 == "Default Title" => null,
+          variant->store.option1
+        )
       },
       _type == "imageItem" => {
         _key,

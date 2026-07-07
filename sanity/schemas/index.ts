@@ -25,8 +25,9 @@ const documents = [page, product, productVariant, collection, legal]
 import home from './singletons/home'
 import settings from './singletons/settings'
 import about from './singletons/about'
+import shop from './singletons/shop'
 
-const singletons = [home, settings, about]
+const singletons = [home, settings, about, shop]
 
 // Block content
 import body from './blocks/body'

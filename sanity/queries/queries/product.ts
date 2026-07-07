@@ -42,6 +42,7 @@ export type RelatedProduct = {
   handle: string
   price: number | null
   previewImage: string | null
+  color: string | null
   hoverImage: SanityImage | null
 }
 
@@ -52,6 +53,8 @@ export type HomeModuleItem = {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   body?: any[]
   title?: string
+  handle?: string | null
+  color?: string | null
   featuredImage?: string
   price?: number
 }
@@ -81,7 +84,6 @@ export type ProductDetail = {
   price: number | null
   previewImage: string | null
   descriptionHtml: string | null
-  images: SanityImage[]
   customProductOptions: ProductCustomOption[]
   shopifyOptions: ProductShopifyOption[]
   variants: ProductVariant[]
@@ -99,9 +101,6 @@ export async function getProduct(handle: string): Promise<ProductDetail | null> 
       "price": store.priceRange.minVariantPrice,
       "previewImage": store.previewImageUrl,
       "descriptionHtml": store.descriptionHtml,
-      "images": images[]{
-        ${image}
-      },
       "customProductOptions": customProductOptions[]{
         title,
         colors[]{
@@ -138,13 +137,17 @@ export async function getProduct(handle: string): Promise<ProductDetail | null> 
         }
       },
       ${homeModules},
-      "relatedProducts": relatedProducts[]->{
-        _id,
-        "title": store.title,
-        "handle": store.slug.current,
-        "price": store.priceRange.minVariantPrice,
-        "previewImage": store.previewImageUrl,
-        "hoverImage": hoverImage{
+      "relatedProducts": relatedProducts[defined(product)]{
+        "_id": coalesce(variant->_id, product->_id),
+        "title": product->store.title,
+        "handle": product->store.slug.current,
+        "price": coalesce(variant->store.price, product->store.priceRange.minVariantPrice),
+        "previewImage": coalesce(variant->store.previewImageUrl, product->store.previewImageUrl),
+        "color": select(
+          variant->store.option1 == "Default Title" => null,
+          variant->store.option1
+        ),
+        "hoverImage": product->hoverImage{
           ${image}
         }
       }

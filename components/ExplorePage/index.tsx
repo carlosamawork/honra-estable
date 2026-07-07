@@ -120,7 +120,12 @@ export function ExplorePage({ data }: Props) {
           <section
             key={module._key || `module-${moduleIndex}`}
             className={`${s.module} ${heightClass}`}
-            style={{ '--columns': columns } as CSSProperties}
+            style={
+              {
+                '--columns': columns,
+                '--columns-mobile': Math.min(columns, 2),
+              } as CSSProperties
+            }
           >
             {(module.items || []).map((item, itemIndex) => (
               <ModuleItem key={item._key || `item-${itemIndex}`} item={item} />

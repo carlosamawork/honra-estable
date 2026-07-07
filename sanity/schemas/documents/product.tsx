@@ -113,8 +113,7 @@ export default defineType({
       type: 'array',
       of: [
         {
-          type: 'reference',
-          to: [{type: 'product'}],
+          type: 'productWithVariant',
         },
       ],
       group: 'editorial',

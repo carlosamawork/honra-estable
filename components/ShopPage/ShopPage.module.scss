@@ -1,5 +1,6 @@
 @use '@/styles/common/variables' as *;
 @use '@/styles/mixins/breakpoints' as *;
+@use '@/styles/mixins/utils' as *;
 
 .shop {
   background-color: $base;
@@ -20,6 +21,21 @@
   text-decoration: none;
   color: inherit;
   cursor: pointer;
+
+  // Separación entre tarjetas en mobile: la marca el padding de 16px del caption
+  @include media-breakpoint-down(sm) {
+    margin-bottom: 0;
+  }
+
+  @include hover() {
+    .imageDefault {
+      opacity: 0;
+    }
+
+    .imageHover {
+      opacity: 1;
+    }
+  }
 }
 
 .imageWrapper {
@@ -27,6 +43,21 @@
   width: 100%;
   aspect-ratio: 720 / 676;
   overflow: hidden;
+
+  // Mobile: imagen a 100% de ancho con altura natural (sin recorte)
+  @include media-breakpoint-down(sm) {
+    aspect-ratio: auto;
+
+    .imageDefault {
+      position: static;
+
+      img {
+        position: static !important;
+        width: 100% !important;
+        height: auto !important;
+      }
+    }
+  }
 }
 
 .imageDefault,
@@ -40,18 +71,62 @@
   opacity: 0;
 }
 
-.card:hover .imageDefault {
-  opacity: 0;
-}
-
-.card:hover .imageHover {
-  opacity: 1;
-}
-
 .imageFallback {
   width: 100%;
   height: 100%;
   background-color: #e0e0e0;
+}
+
+// ─── Modules (campaña tras la grid — singleton shop) ─────────────────────────
+
+.module {
+  display: grid;
+  grid-template-columns: repeat(var(--module-columns, 1), 1fr);
+  position: relative;
+  overflow: hidden;
+}
+
+.moduleFull {
+  height: 100vh;
+
+  // 390×720 en el diseño mobile (Figma 307:3036)
+  @include media-breakpoint-down(sm) {
+    height: auto;
+    aspect-ratio: 390 / 720;
+  }
+}
+
+.moduleMedium {
+  height: 60vh;
+
+  @include media-breakpoint-down(sm) {
+    height: 40vh;
+  }
+}
+
+.moduleAuto {
+  height: auto;
+  aspect-ratio: 1440 / 800;
+
+  @include media-breakpoint-down(sm) {
+    aspect-ratio: 390 / 720;
+  }
+}
+
+.moduleItem {
+  position: relative;
+  overflow: hidden;
+}
+
+.moduleText {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 24px;
+  font-family: $OverusedGrotesk;
+  font-size: 14px;
+  line-height: 1.4;
+  color: $secondary;
 }
 
 .info {
@@ -59,6 +134,12 @@
   display: flex;
   flex-direction: column;
   gap: 2px;
+
+  // Nombre y precio con márgenes de 16px en mobile
+  @include media-breakpoint-down(sm) {
+    padding: 1.6rem;
+    gap: 0;
+  }
 }
 
 .title {
@@ -68,6 +149,11 @@
   text-transform: uppercase;
   line-height: 1.3;
   color: $secondary;
+
+  @include media-breakpoint-down(sm) {
+    font-size: 1.4rem;
+    line-height: 1.4rem;
+  }
 }
 
 .price {
@@ -77,4 +163,9 @@
   text-transform: uppercase;
   line-height: 1.3;
   color: $secondary;
+
+  @include media-breakpoint-down(sm) {
+    font-size: 1.4rem;
+    line-height: 1.4rem;
+  }
 }

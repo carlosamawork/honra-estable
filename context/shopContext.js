@@ -99,8 +99,10 @@ export default function ShopProvider({ children }) {
     localStorage.setItem('checkout_id', JSON.stringify([updatedCart, shopifyCart]))
   }
 
-  async function removeCartItem(itemToRemove) {
-    const updatedCart = cart.filter((item) => item.productId !== itemToRemove)
+  // Recibe el GID de la variante — un mismo producto puede estar en el carrito
+  // en varios colores y solo debe eliminarse la variante indicada
+  async function removeCartItem(variantGidToRemove) {
+    const updatedCart = cart.filter((item) => item.store?.gid !== variantGidToRemove)
 
     setCart(updatedCart)
 

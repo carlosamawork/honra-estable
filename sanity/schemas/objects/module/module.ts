@@ -116,8 +116,7 @@ export default defineField({
         {
           name: 'productItem',
           title: 'Product item',
-          type: 'reference',
-          to: [{ type: 'product' }],
+          type: 'productWithVariant',
         }
       ],
       validation: (Rule) => Rule.required().min(1),

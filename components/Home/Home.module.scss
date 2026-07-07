@@ -32,26 +32,47 @@
 
 .module {
   --module-columns: 1;
+  --module-columns-mobile: 1;
   display: grid;
   grid-template-columns: repeat(var(--module-columns), minmax(0, 1fr));
 
-  @include media-breakpoint-down(sm) {
-    grid-template-columns: 1fr;
+  // Mobile mantiene 2 columnas cuando el módulo tiene 2+ (diseño Figma 296:2937)
+  @include media-breakpoint-down(md) {
+    grid-template-columns: repeat(var(--module-columns-mobile), minmax(0, 1fr));
   }
 }
 
 .moduleItem {
   min-width: 0;
   margin-bottom: 32px;
+
+  // Salto entre módulos de 24px en mobile (Figma 296:2946)
+  @include media-breakpoint-down(md) {
+    margin-bottom: 2.4rem;
+  }
+
   &.imageModuleItem{
     margin-bottom: 0;
   }
-  
+
+  // En mobile solo las imágenes mantienen columnas; productos y textos
+  // se apilan a ancho completo (Figma 296:2944 / 296:2958)
+  @include media-breakpoint-down(md) {
+    &:has(.textItem),
+    &:has(.productItem) {
+      grid-column: 1 / -1;
+    }
+  }
 }
 
 .isAuto .imageItem{
   aspect-ratio: 4 / 5;
   position: relative;
+
+  // 195×280 en el diseño mobile (grids de 2 columnas)
+  @include media-breakpoint-down(md) {
+    aspect-ratio: 195 / 280;
+  }
 }
 
 .isMedium .imageItem{
@@ -62,11 +83,25 @@
 .isFull .imageItem{
   height: 100vh;
   position: relative;
+
+  // Imagen a pantalla completa también en mobile (390×800 en Figma)
+  @include media-breakpoint-down(md) {
+    height: 100svh;
+  }
+}
+
+.productLink {
+  display: block;
 }
 
 .productItem{
   aspect-ratio: 1 / 1;
   position: relative;
+
+  // 390×520 en el diseño mobile
+  @include media-breakpoint-down(md) {
+    aspect-ratio: 3 / 4;
+  }
 }
 
 .imageItem,
@@ -90,6 +125,11 @@
 
 .productInfo {
   padding: 0.8rem;
+
+  // Caption pegado a la imagen y a 16px del borde (Figma 296:2943)
+  @include media-breakpoint-down(md) {
+    padding: 0.2rem 1.6rem 0;
+  }
   display: flex;
   justify-content: space-between;
   align-items: baseline;
@@ -113,12 +153,21 @@
 .textItem {
   padding: 1rem 0.8rem;
 
+  // Textos a 16px del borde en mobile (Figma 296:2941)
+  @include media-breakpoint-down(md) {
+    padding: 1rem 1.6rem;
+  }
+
   p {
     font-family: $OverusedGrotesk;
     font-weight: 500;
     margin: 0;
     font-size: 14px;
     line-height: 1.2;
+
+    @include media-breakpoint-down(md) {
+      font-size: 10px;
+    }
   }
 
   h1 {
@@ -126,11 +175,16 @@
     font-weight: 500;
     font-size: 24px;
     line-height: 1.1;
+
+    @include media-breakpoint-down(md) {
+      font-size: 16px;
+    }
   }
 }
 
 .imageFallback {
-  width: 100%;
+  position: absolute;
+  inset: 0;
   background:
     radial-gradient(circle at 72% 28%, rgba(255, 84, 55, 0.35), transparent 30%),
     linear-gradient(140deg, #e8e8e8 0%, #d8d8d8 100%);
