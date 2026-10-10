@@ -2,9 +2,6 @@ import {CogIcon} from '@sanity/icons'
 import {defineType, defineField} from 'sanity'
 
 const TITLE = 'Settings'
-interface ProductOptions {
-  title: string
-}
 
 export default defineType({
   name: 'settings',
@@ -16,6 +13,18 @@ export default defineType({
       default: true,
       name: 'navigation',
       title: 'Navigation',
+    },
+    {
+      name: 'brand',
+      title: 'Brand',
+    },
+    {
+      name: 'labels',
+      title: 'Labels',
+    },
+    {
+      name: 'cookies',
+      title: 'Cookies',
     },
     {
       name: 'notFoundPage',
@@ -30,7 +39,8 @@ export default defineType({
     // Menu
     defineField({
       name: 'menu',
-      title: 'Menu',
+      title: 'Header menu',
+      description: 'Links shown in the header. Desktop shows the first 3, mobile shows all.',
       type: 'menuSettings',
       group: 'navigation',
     }),
@@ -40,6 +50,28 @@ export default defineType({
       title: 'Footer',
       type: 'footerSettings',
       group: 'navigation',
+    }),
+    // Brand
+    defineField({
+      name: 'brand',
+      title: 'Brand',
+      type: 'brandSettings',
+      group: 'brand',
+    }),
+    // Labels
+    defineField({
+      name: 'labels',
+      title: 'Interface labels',
+      description: 'Button texts and short messages used across the site.',
+      type: 'labelSettings',
+      group: 'labels',
+    }),
+    // Cookies
+    defineField({
+      name: 'cookies',
+      title: 'Cookie banner',
+      type: 'cookieSettings',
+      group: 'cookies',
     }),
     // Not found page
     defineField({

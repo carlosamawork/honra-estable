@@ -2,6 +2,7 @@ import { notFound } from 'next/navigation'
 import type { Viewport } from 'next'
 import { getProduct, getProductHandles, getProductSEO } from '@/sanity/queries/queries/product'
 import { getProductStorefrontData } from '@/lib/shopify'
+import { getLabels } from '@/sanity/queries/common/labels'
 import {
   ProductPage,
   type ShopifyColorValue,
@@ -89,13 +90,14 @@ export const viewport: Viewport = {
 
 export default async function ProductDetailPage({ params }: Props) {
   const { handle } = await params
-  const [product, storefrontData] = await Promise.all([
+  const [product, storefrontData, labels] = await Promise.all([
     getProduct(handle),
     getProductStorefrontData(handle) as Promise<{
       galleries: VariantGalleries
       productImages: VariantGalleryImage[]
       colorValues: ShopifyColorValue[]
     }>,
+    getLabels(),
   ])
 
   if (!product) notFound()
@@ -106,6 +108,7 @@ export default async function ProductDetailPage({ params }: Props) {
       variantGalleries={storefrontData.galleries}
       productImages={storefrontData.productImages}
       shopifyColorValues={storefrontData.colorValues}
+      labels={labels}
     />
   )
 }

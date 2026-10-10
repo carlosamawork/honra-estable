@@ -9,26 +9,31 @@ export default defineField({
     collapsible: true,
   },
   fields: [
-    // Links
     defineField({
       name: 'footerLinks',
-      title: 'Footer Links',
+      title: 'Primary links',
+      description: 'First column (Shop, About, Explore...). Max 5.',
       type: 'menuLinks',
     }),
     defineField({
       name: 'footerLinksSecondary',
-      title: 'Footer Links',
+      title: 'Legal links',
+      description: 'Second column (Contact, Terms, Privacy...). Max 5.',
       type: 'menuLinks',
     }),
     defineField({
       name: 'claim',
       title: 'Claim',
-      type: 'string',
+      description: 'Short brand statement shown in the footer.',
+      type: 'text',
+      rows: 3,
     }),
     defineField({
       name: 'copyright',
-      title: 'Copyright',
-      type: 'string',
-    })
+      title: 'Legal line',
+      description: 'Company details and copyright, shown at the bottom.',
+      type: 'text',
+      rows: 3,
+    }),
   ],
 })

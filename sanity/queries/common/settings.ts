@@ -3,6 +3,7 @@ import { groq } from 'next-sanity'
 import { client } from '../index'
 import type { SettingsData } from '@/sanity/types'
 import { seo } from '../fragments/seo'
+import { brandImage } from '../primitives/brandImage'
 
 export async function getSettings(): Promise<SettingsData> {
   return client.fetch(
@@ -33,6 +34,35 @@ export async function getSettings(): Promise<SettingsData> {
       },
       "claim": footer.claim,
       "copyright": footer.copyright,
+      brand{
+        logo{ ${brandImage} },
+        logoFooter{ ${brandImage} },
+        socialHandle,
+        socialUrl,
+        contactEmail
+      },
+      labels{
+        cart,
+        addToCart,
+        soldOut,
+        cartEmpty,
+        quantity,
+        checkout
+      },
+      cookies{
+        title,
+        text,
+        privacyTitle,
+        privacyText,
+        privacyLinkLabel,
+        privacyLinkUrl,
+        acceptAllLabel,
+        acceptEssentialLabel
+      },
+      notFoundPage{
+        title,
+        body
+      },
       seo{
         ${seo}
       }

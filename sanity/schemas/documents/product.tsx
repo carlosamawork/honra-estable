@@ -120,7 +120,7 @@ export default defineType({
     }),
     defineField({
       name: 'orderRank',
-      title: 'Orden',
+      title: 'Order',
       type: 'string',
       group: 'editorial',
       hidden: true,

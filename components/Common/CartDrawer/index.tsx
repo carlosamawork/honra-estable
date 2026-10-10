@@ -3,11 +3,16 @@
 import { useContext } from 'react'
 import { CartContext } from '@/context/shopContext'
 import s from './CartDrawer.module.scss'
+import type { LabelsData } from '@/sanity/types'
 
 const formatPrice = (value: number): string =>
   new Intl.NumberFormat('es-ES', { style: 'currency', currency: 'EUR' }).format(value)
 
-export default function CartDrawer() {
+type Props = {
+  labels?: LabelsData
+}
+
+export default function CartDrawer({ labels }: Props) {
   const { cart, cartOpen, setCartOpen, checkoutUrl, removeCartItem, updateCartItem } =
     useContext(CartContext)
 
@@ -48,17 +53,17 @@ export default function CartDrawer() {
           <button
             className={s.close}
             onClick={() => setCartOpen(false)}
-            aria-label="Cerrar carrito"
+            aria-label="Close cart"
           >
             ×
           </button>
-          <span className={s.cartCount}>CART ({cart.length})</span>
+          <span className={s.cartCount}>{labels?.cart || 'CART'} ({cart.length})</span>
         </div>
 
         {/* Items */}
         <div className={s.items}>
           {cart.length === 0 ? (
-            <p className={s.empty}>Tu carrito está vacío.</p>
+            <p className={s.empty}>{labels?.cartEmpty || 'Your cart is empty.'}</p>
           ) : (
             cart.map((item: any, i: number) => (
               <article key={item.store?.gid ?? i} className={s.item}>
@@ -78,7 +83,7 @@ export default function CartDrawer() {
                 </div>
                 <div className={s.itemMeta}>
                   <div className={s.itemQty}>
-                    <span className={s.itemQtyLabel}>Cant.</span>
+                    <span className={s.itemQtyLabel}>{labels?.quantity || 'Qty'}</span>
                     <div className={s.itemQtyControls}>
                       <button
                         onClick={() => handleQuantityChange(item, -1)}
@@ -115,10 +120,10 @@ export default function CartDrawer() {
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                Checkout
+                {labels?.checkout || 'Checkout'}
               </a>
             ) : (
-              <span className={`${s.checkout} ${s.checkoutDisabled}`}>Checkout</span>
+              <span className={`${s.checkout} ${s.checkoutDisabled}`}>{labels?.checkout || 'Checkout'}</span>
             )}
           </div>
           <button

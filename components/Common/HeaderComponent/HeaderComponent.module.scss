@@ -204,3 +204,10 @@
     padding: 0 0 0 1.2rem;
   }
 }
+
+// Logo uploaded from Settings > Brand (falls back to the inline SVG)
+.logoImage {
+  display: block;
+  width: 17.7rem;
+  height: auto;
+}

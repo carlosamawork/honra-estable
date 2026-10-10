@@ -1,0 +1,54 @@
+@use '../../styles/mixins/breakpoints' as *;
+@use '../../styles/common/variables' as *;
+
+.notFound {
+  // Same top offset as legal pages (under the fixed header)
+  padding: 14.6rem 1.6rem 8rem;
+  min-height: 60vh;
+  display: flex;
+  flex-direction: column;
+  gap: 2.4rem;
+
+  @include media-breakpoint-down(sm) {
+    padding: 14.2rem 1.6rem 6rem;
+  }
+}
+
+.title {
+  margin: 0;
+  font-family: $OverusedGrotesk;
+  font-weight: 600;
+  font-size: 1.6rem;
+  line-height: 1.1;
+  text-transform: uppercase;
+}
+
+.body {
+  margin: 0;
+  font-family: $OverusedGrotesk;
+  font-weight: 600;
+  font-size: 1.6rem;
+  line-height: 1.1;
+  max-width: 60ch;
+
+  p {
+    margin: 0;
+    font-size: inherit;
+    line-height: inherit;
+  }
+
+  a {
+    text-decoration: underline;
+    color: inherit;
+  }
+}
+
+.link {
+  font-family: $OverusedGrotesk;
+  font-weight: 600;
+  font-size: 1.6rem;
+  text-transform: uppercase;
+  text-decoration: underline;
+  color: inherit;
+  width: fit-content;
+}

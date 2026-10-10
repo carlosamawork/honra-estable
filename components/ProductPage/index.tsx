@@ -11,6 +11,7 @@ import type {
   HomeModuleItem,
 } from '@/sanity/queries/queries/product'
 import { portableBlockComponents } from '@/utils/portableText/portableText'
+import type { LabelsData } from '@/sanity/types'
 import s from './ProductPage.module.scss'
 
 export type VariantGalleryImage = {
@@ -33,6 +34,7 @@ type Props = {
   variantGalleries?: VariantGalleries
   productImages?: VariantGalleryImage[]
   shopifyColorValues?: ShopifyColorValue[]
+  labels?: LabelsData
 }
 
 const formatPrice = (value: number | null): string => {
@@ -51,6 +53,7 @@ export function ProductPage({
   variantGalleries,
   productImages,
   shopifyColorValues,
+  labels,
 }: Props) {
   const { addToCart } = useContext(CartContext)
   const [selectedVariant, setSelectedVariant] = useState<ProductVariant | null>(
@@ -227,8 +230,8 @@ export function ProductPage({
               disabled={!selectedVariant?.store?.inventory?.isAvailable}
             >
               {selectedVariant?.store?.inventory?.isAvailable === false
-                ? 'Agotado'
-                : 'Agregar al carrito'}
+                ? labels?.soldOut || 'Sold out'
+                : labels?.addToCart || 'Add to cart'}
             </button>
 
             {/* Characteristics accordion — desktop (en mobile van tras la galería) */}

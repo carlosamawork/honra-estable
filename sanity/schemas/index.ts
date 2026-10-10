@@ -39,6 +39,9 @@ const blocks = [body, bodySimple, bodyTextTerms]
 // Object types
 import modulePage from './objects/module/module'
 import footer from './objects/global/footer'
+import brand from './objects/global/brand'
+import cookies from './objects/global/cookies'
+import labels from './objects/global/labels'
 import header from './objects/global/header'
 import linkExternal from './objects/global/linkExternal'
 import linkInternal from './objects/global/linkInternal'
@@ -84,6 +87,9 @@ import collectionLinks from './objects/collection/links'
 
 const objects = [
   footer,
+  brand,
+  cookies,
+  labels,
   header,
   links,
   linkExternal,

@@ -135,3 +135,16 @@
         max-width: 125ch;
     }
 }
+
+// Symbol uploaded from Settings > Brand (falls back to the inline SVG)
+.logo .logoImage {
+    display: block;
+    width: 7.2rem;
+    height: auto;
+}
+
+.mobileIcon .logoImage {
+    display: block;
+    width: 4.8rem;
+    height: auto;
+}

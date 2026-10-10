@@ -55,13 +55,13 @@ export default function NewsletterComponent({ data, type = "banner" }: { data: a
                         <div className={s.checkboxWrp}>
                             <input type="checkbox" id={"consent"} name={"consent"} required checked={consent} onChange={e => setConsent(e.target.checked)} />
                         </div>
-                        <label htmlFor="consent">By accepting, I confirm that I am over 18 years old and that I accept the <Link href="/legal/#terms-conditions">Terms and Conditions</Link>*.</label>
+                        <label htmlFor="consent">By accepting, I confirm that I am over 18 years old and that I accept the <Link href="/legals/terms-of-use">Terms and Conditions</Link>*.</label>
                     </div>
                     <button type="submit">Subscribe</button>
                     <div className={s.answer}>{result && result.status == 200 ? <p className={s.success}>{"You’re suscribed, thank you!"}</p> : result && result.status == 400 ? <p className={s.error}>{"You’re already subscribed!"}</p> : errors ? <p className={s.error} data-text={errors.email || errors.consent}>{errors.email || errors.consent}</p> : undefined}</div>
 
                 </form>
-                <p>*Around the World Art S.L. is responsible for the processing of your personal data, which will be handled for the purpose of sending you our newsletter and communications about our activity/project. You can exercise your data protection rights by emailing info@the99.art.</p>
+                <p>*Honra is responsible for the processing of your personal data, which will be handled for the purpose of sending you our newsletter and communications about our activity. You can exercise your data protection rights by emailing comercial@honra.world.</p>
             </div>
         </section>
     )

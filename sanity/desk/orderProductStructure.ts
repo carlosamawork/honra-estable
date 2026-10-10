@@ -4,7 +4,7 @@ import {ListItemBuilder, StructureBuilder, StructureContext} from 'sanity/struct
 
 export default (S: StructureBuilder, context: StructureContext) =>
   S.listItem()
-    .title('Ordenar Productos')
+    .title('Product order')
     .icon(DocumentsIcon)
     .child(async (id) =>
         S.list()

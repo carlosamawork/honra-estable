@@ -16,12 +16,12 @@ export default defineField({
     }),
     defineField({
       name: 'textUp',
-      title: 'Texto de arriba',
+      title: 'Text above',
       type: 'bodySimple',
     }),
     defineField({
       name: 'textDown',
-      title: 'Texto de abajo',
+      title: 'Text below',
       type: 'bodySimple',
     }),
   ],

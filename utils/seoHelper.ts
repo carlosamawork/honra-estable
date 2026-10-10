@@ -13,7 +13,7 @@ export const buildUrl = (path = "/") => new URL(path, BASE_URL).toString();
 // 🌍 Global site metadata
 export const siteTitle = "Honra";
 export const siteDescription =
-	"Acne Studios' mission is to be a progressive luxury house responding to the significant questions of our time.";
+	"Honra. Good objects, made to keep.";
 
 // 🔗 Social & canonical links
 export const linkInstagram = "https://www.instagram.com/honra/";
