@@ -1,11 +1,13 @@
 import "../../styles/main.scss";
 
-import { Outfit } from 'next/font/google';
+import localFont from 'next/font/local';
 import React, { Suspense } from 'react';
 
-const outfit = Outfit({
-  subsets: ['latin'],
-  weight: ['400', '500', '600', '700'],
+// Self-hosted (variable font, latin subset) to avoid fetching Google Fonts at build time.
+// See https://github.com/vercel/next.js/issues/99114
+const outfit = localFont({
+  src: '../../styles/fonts/Outfit-Variable-latin.woff2',
+  weight: '400 700',
   variable: '--font-outfit',
   display: 'swap',
 });
